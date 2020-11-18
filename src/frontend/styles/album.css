@@ -1,0 +1,17 @@
+
+.album {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+}
+
+.cover {
+    width:150px;
+    height:150px;
+}
+
+.artistinfo {
+    float: right;
+    background: yellow;
+}
+
