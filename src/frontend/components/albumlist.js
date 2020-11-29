@@ -3,16 +3,52 @@ import Album from './albumtile';
 
 import '../styles/albumgrid.css'
 
-const List = () => {
-    return ( 
-        <section className='AlbumGrid'>
-            <Album />
-            <Album />
-            <Album />
-            <Album />
-            <Album />
-        </section>
-    );
+class AlbumList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            album : null,
+            finished: false
+        }
+    }
+    componentDidMount() {
+
+        
+        var albums = getData('http://localhost:5000/albums');
+        albums.then(value => {
+            console.log(value);
+            this.setState({
+            album : value
+        })});
+        
+
+    }
+        render() {
+
+            let album = (
+                <section className='AlbumGrid'>
+                {
+                this.state.album && this.state.album.map(currentAlbum => (
+                         <Album album={currentAlbum} />
+                ))
+            
+                }
+                </section>
+                );
+
+                
+        return ( 
+            <div>
+                {album}
+            </div>
+            
+        );
+    }
 }
 
-export default List;
+async function getData(url) {
+    let response = await fetch(url);
+    const data = await response.json();
+    return data;
+}
+export default AlbumList;

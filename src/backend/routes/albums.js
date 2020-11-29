@@ -8,4 +8,18 @@ router.route('/').get((req, res) => {
 
 });
 
+router.route('/add').post((req,res) => {
+    const title = req.body.title;
+    const artist = req.body.artist;
+    const songs = req.body.songs;
+    const cover = req.body.cover;
+    const date = req.body.date;
+    const genre = req.body.genre;
+
+    const newAlbum = new Album({title, artist, songs, cover, date, genre});
+    newAlbum.save()
+    .then(() => res.json("Album Added!"));
+
+});
+
 module.exports = router;

@@ -1,17 +1,17 @@
 import React from "react";
-import { NavLink, BrowserRouter as Router } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import AddAlbum from './addalbum';
 
 
 const Nav = () => {
     return (
-        <Router>
-            <nav className="pgg-nav">
-                <ul>
-                    <li><NavLink to="/albums">Albums</NavLink></li>
-                    <li><NavLink to="/mypage">My Page</NavLink></li>
-                </ul>
-            </nav>
-        </Router>
+        <nav className="pgg-nav">
+            <ul>
+                <li><NavLink to="/">Albums</NavLink></li>
+                <li><NavLink to="/mypage">My Page</NavLink></li>
+                <li><NavLink to="/addalbum">Add New Album</NavLink></li>
+            </ul>
+        </nav>
 
     );
 

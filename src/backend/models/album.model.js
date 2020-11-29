@@ -27,6 +27,10 @@ const albumSchema = mongoose.Schema({
         required: true,
         unique: false
     },
+    genre: {
+        type: String,
+        required: false
+    }
 
 
 });

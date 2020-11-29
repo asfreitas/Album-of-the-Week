@@ -1,33 +1,34 @@
 import React from 'react';
 import '../styles/album.css'
 
-const Album = () => {
-    return (
-        <section sectionName='album'>
-            <CoverArt />
+function Album(props) {
+        return(
+            <section className='album'>
+            <CoverArt cover={props.album.cover} />
             <div className='artistinfo'>
-                <Title />
-                <Artist />
+                <Title title={props.album.title} />
+                <Artist artist={props.album.artist} />
             </div>
             <TrackList />
         </section>
     );
-
+        
 }
 
-const Artist = () => {
+function Artist(props) {
+    console.log(props.artist);
     return(
-    <h4>by Nirvana</h4>
+    <h4>{props.artist}</h4>
     );
 }
-const Title = () => {
+function Title(props) {
     return(
-        <h1>Nevermind</h1>
+        <h1>{props.title}</h1>
     )
 }
-const CoverArt = () => {
+function CoverArt(props){
     return(
-    <img className='cover' alt='' src = 'http://static.rawckus.com/wp-content/uploads/2016/03/nirvana-nevermind-1.jpg'></img>
+    <img className='cover' alt='' src = {props.cover}></img>
     );
 }
 const TrackList = () => {
