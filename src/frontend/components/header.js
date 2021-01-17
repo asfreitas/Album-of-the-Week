@@ -7,8 +7,6 @@ const Header = () => {
                 <h1>Album of the Week</h1>
                 <Nav />
             </header>
-
-
         );
 
 };

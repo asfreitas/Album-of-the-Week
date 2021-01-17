@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import AddAlbum from './addalbum';
 
 
 const Nav = () => {

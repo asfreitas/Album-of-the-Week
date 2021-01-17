@@ -1,53 +1,51 @@
 import React from 'react';
 import '../styles/album.css'
+import Card from 'react-bootstrap/Card'
 
 function Album(props) {
         return(
-            <section className='album'>
-            <CoverArt cover={props.album.cover} />
-            <div className='artistinfo'>
-                <Title title={props.album.title} />
-                <Artist artist={props.album.artist} />
-            </div>
-            <TrackList />
+        <section className='album'>
+            <Card className='main'>
+            <Card.Body>
+                <div className='maininfo'>
+                    <CoverArt  cover={props.album.cover} height={props.album.height} width={props.album.width} />
+                    < Title className='title' title={props.album.title} />
+                </div>
+            
+                <TrackList className='tracks' tracks={props.album.tracks}/>
+            </Card.Body>
+            </Card>
         </section>
     );
         
 }
-
-function Artist(props) {
-    console.log(props.artist);
-    return(
-    <h4>{props.artist}</h4>
-    );
-}
 function Title(props) {
     return(
-        <h1>{props.title}</h1>
+        <Card.Title className='title'>{props.title}</Card.Title>
     )
 }
 function CoverArt(props){
     return(
-    <img className='cover' alt='' src = {props.cover}></img>
+        <img variant="top" className='cover' src={props.cover} height={props.height}
+        width={props.width} />
     );
 }
-const TrackList = () => {
+function TrackList(props) {
+    const songs = props.tracks;
+    console.log(songs);
+    if(props.tracks === undefined)
+    return "";
+    const items = songs.map((song, index) =>
+    <li key={song}>
+       {index+1} {song}
+    </li>
+    );
     return(
         <ul>
-            <li>Smells Like Teen Spirit</li>
-            <li>In Bloom</li>
-            <li>Come as you are</li>
-            <li>Breed</li>
-            <li>Lithium</li>
-            <li>Polly</li>
-            <li>Territorial Pissings</li>
-            <li>Drain You</li>
-            <li>Lounge Act</li>
-            <li>Stay Away</li>
-            <li>On the Plain</li>
-            <li>Something in the Way</li>
+            {items} 
         </ul>
-    );
+    )
+    
 }
 
 export default Album;

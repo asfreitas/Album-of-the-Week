@@ -20,8 +20,6 @@ class AlbumList extends React.Component {
             this.setState({
             album : value
         })});
-        
-
     }
         render() {
 
@@ -31,12 +29,9 @@ class AlbumList extends React.Component {
                 this.state.album && this.state.album.map(currentAlbum => (
                          <Album album={currentAlbum} />
                 ))
-            
                 }
                 </section>
                 );
-
-                
         return ( 
             <div>
                 {album}

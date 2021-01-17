@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import Header from "./frontend/components/header";
 import List from "./frontend/components/albumlist";
 import AddAlbum from './frontend/components/addalbum';
-import {Route, BrowserRouter, Switch } from 'react-router-dom'
-
+import {Route, Switch } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { withCookies } from 'react-cookie';
 class App extends Component {
 
     render() {
@@ -12,11 +13,11 @@ class App extends Component {
                   <Header/>
                   <Switch>
                     <Route path='/addalbum' component={AddAlbum} />
-                      <Route path='/' component={List} />
+                    <Route path='/' component={List} />
                   </Switch>
               </main>
         );
     }
 }
 
-export default App;
+export default withCookies(App);
