@@ -1,0 +1,14 @@
+.main { 
+    width: 15rem;
+}
+img {
+    padding: 10px;
+}
+
+.album {
+    width: 50%;
+    margin: 0 auto;
+}
+.stretched-link {
+    z-index:-1;
+}

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import Header from "./frontend/components/header";
 import List from "./frontend/components/albumlist";
-import AddAlbum from './frontend/components/addalbum';
+import Search from './frontend/components/search';
+import AddAlbum from './frontend/components/addAlbum';
 import {Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { withCookies } from 'react-cookie';
 class App extends Component {
 
     render() {
@@ -12,12 +12,14 @@ class App extends Component {
               <main>
                   <Header/>
                   <Switch>
-                    <Route path='/addalbum' component={AddAlbum} />
-                    <Route path='/' component={List} />
+                   <Route path='/addalbum' component={AddAlbum}/>
+
+                    <Route path='/search' component={Search} />
+                    <Route path='/' component={List} /> 
                   </Switch>
               </main>
         );
     }
-}
+}// the '/' should always be last for the time being
 
-export default withCookies(App);
+export default App;

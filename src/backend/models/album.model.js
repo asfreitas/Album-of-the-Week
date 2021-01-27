@@ -17,22 +17,10 @@ const albumSchema = mongoose.Schema({
         type: String,
         required: true
     }],
-    cover: {
-        data: Buffer,
-        type: String
-    },
-
-    date: {
-        type: Date,
-        required: true,
-        unique: false
-    },
-    genre: {
-        type: String,
-        required: false
-    }
-
-
+    cover: String,
+    date: Date,
+    genre: String,
+    isAlbumOfWeek: Boolean
 });
 
 const Album = mongoose.model('Album', albumSchema);

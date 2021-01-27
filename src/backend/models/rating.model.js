@@ -10,7 +10,7 @@ const ratingSchema = mongoose.Schema({
         ref: 'Album'
     },
     rating: {
-        type: Number,
+        type: Number
     }
 
 

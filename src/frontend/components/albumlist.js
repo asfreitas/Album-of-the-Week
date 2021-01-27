@@ -1,5 +1,5 @@
 import React from 'react';
-import Album from './albumtile';
+import Album from './albums/albumtile';
 
 import '../styles/albumgrid.css'
 
@@ -12,8 +12,6 @@ class AlbumList extends React.Component {
         }
     }
     componentDidMount() {
-
-        
         var albums = getData('http://localhost:5000/albums');
         albums.then(value => {
             console.log(value);

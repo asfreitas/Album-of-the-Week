@@ -8,7 +8,7 @@ const Nav = () => {
             <ul>
                 <li><NavLink to="/">Albums</NavLink></li>
                 <li><NavLink to="/mypage">My Page</NavLink></li>
-                <li><NavLink to="/addalbum">Add New Album</NavLink></li>
+                <li><NavLink to="/search">Add New Album</NavLink></li>
             </ul>
         </nav>
 

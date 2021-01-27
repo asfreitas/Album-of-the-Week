@@ -4,20 +4,38 @@ const generate = require('./generateToken');
 const env = require('../env');
 const fetch = require('../tools/fetch');
 
+// check for reusable token and create new one if necessary
 function getToken(req, res, next) {
-    generate.generateToken()
-    .then(result => {
-        res.locals.token = result;
-        if(result){
-            next();
-        }
-        else{
-            res.send("Could not get new token");
-        }
-    });
+    const token = req.headers['access_token'];
+    console.log(req.headers);
+    console.log("The token at line 10 is: " + token);
+    if(token === 'undefined' || token === undefined) {
+        generate.generateToken()
+        .then(result => {
+            console.log("Creating new token");
+            res.locals.token = result['access_token'];
+            res.locals.expires_in = result['expires_in'];
+            if(result){
+                next();
+            }
+            else{
+                res.send("Could not get new token");
+            }
+        });
+    }
+    else {
+        console.log("Reusing token");
+        res.locals.token = token;
+        res.locals.expires_in = undefined;
+        next();
+        /*
+
+        */
+    }
+
 }
 
-// search for a new 
+// search for albums
 async function searchSpotify(token, query) {
     const authorize = "Bearer " + token;
 
@@ -46,19 +64,22 @@ async function getTracks(token, id) {
 }
 
 router.route('/').get(getToken, function(req, res, next){
-    let token = res.locals.token["access_token"];
+    console.log(res.locals);
+    const token = res.locals.token;
+    const expires_in = res.locals.expires_in;
+
+    let expiration = new Date();
+    expiration.setSeconds(expiration.getSeconds() + expires_in);
+
     const query = req.query.q;
-
-
+    // send the data
+    const tokenAndExpiration = [token, expiration];
     (async () => {
         let albums = await searchSpotify(token, query);
-        console.log(albums);
-      // for(let i = 0; albums.albums.items.length;)
-        let tracks = await getTracks(token, albums.albums.items[0].id)
-        const fullAlbum = [albums.albums.items, tracks];
-        //console.log(fullAlbum);
+        console.log("The token at line 72 is " + token);
+        let tracks = await getTracks(token, albums.albums.items[0].id);
+        const fullAlbum = [albums.albums.items, tracks, tokenAndExpiration];
         res.send(fullAlbum)
-        //console.log(tracks);
     })();
     
 });
