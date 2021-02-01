@@ -10,7 +10,7 @@ import '../styles/albumgrid.css';
 import '../components/albums/styles/album.css';
 class Search extends React.Component {
     static propTypes = {
-        cookies: instanceOf(Cookies).isRequired,
+        cookies: instanceOf(Cookies).isRequired
     };
     constructor(props) {
         super(props);
@@ -24,7 +24,6 @@ class Search extends React.Component {
         };
         // function bindings
         this.handleSubmit = this.handleSubmit.bind(this);
-    //    this.generateAlbum = this.generateAlbum.bind(this);
         this.handleChange = this.handleChange.bind(this);
 
     }
@@ -43,7 +42,8 @@ class Search extends React.Component {
             const res = await getAlbums(query, token);
             console.log(res);
 
-            const newToken = res[2];
+            const newToken = res[1];
+            console.log(newToken);
             cookies.set('token', newToken, { path: '/'})
             const albums = generateAlbum(res);
             this.setState({albums: albums});

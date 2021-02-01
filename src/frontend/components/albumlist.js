@@ -12,7 +12,7 @@ class AlbumList extends React.Component {
         }
     }
     componentDidMount() {
-        var albums = getData('http://localhost:5000/albums');
+        var albums = getData('http://localhost:5001/albums');
         albums.then(value => {
             console.log(value);
             this.setState({

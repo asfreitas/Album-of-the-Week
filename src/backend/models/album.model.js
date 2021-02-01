@@ -1,26 +1,19 @@
 const mongoose = require('mongoose');
 
 const albumSchema = mongoose.Schema({
+    album_id: String,
     title: {
         type: String,
-        required: true, 
-        unique: true, 
-        trim: true,
     },
-    artist: {
-        type: String, 
-        required: true,
-        unique: false, 
-        trim: true,
-    },
-    songs: [{
-        type: String,
-        required: true
-    }],
+    artist_id: mongoose.Schema.Types.ObjectId,
+    tracks: [{name: String, length: Number, track_id: String}],
     cover: String,
     date: Date,
-    genre: String,
-    isAlbumOfWeek: Boolean
+    genres: [String],
+    isAlbumOfWeek: Boolean,
+    uri: String,
+    user: mongoose.Schema.Types.ObjectId,
+    ratings: [mongoose.Schema.Types.ObjectId]
 });
 
 const Album = mongoose.model('Album', albumSchema);

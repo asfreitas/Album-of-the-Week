@@ -12,7 +12,8 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    albums: [mongoose.Schema.Types.ObjectId]
 });
 
 const User = mongoose.model('User', userSchema);

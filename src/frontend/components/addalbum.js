@@ -1,104 +1,105 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import ViewableAlbum from './albums/viewAlbum';
 import Form from 'react-bootstrap/Form';
-import Album from './albumtile';
+import Button from 'react-bootstrap/Button';
+import { getTracks, insertAlbum, getGenre } from '../helpers/albumHelper';
+import '../styles/addalbum.css';
 import { instanceOf } from 'prop-types';
-import { withCookies, Cookies } from 'react-cookie';
+import { Cookies, withCookies } from 'react-cookie';
+
+
 class AddAlbum extends React.Component {
     static propTypes = {
-        cookies: instanceOf(Cookies).isRequired,
+        cookies: instanceOf(Cookies).isRequired
     };
     constructor(props) {
         super(props);
-
         const { cookies } = props;
+
         this.state = {
-            searchQuery: '',
-            albums: undefined,
-            token: cookies.get('token')
-        }
+            album: props.location.state.album,
+            name: undefined,
+            AOTW: false
+        };
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.generateAlbum = this.generateAlbum.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-
+        this.handleCheck = this.handleCheck.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
     }
-    generateAlbum(fullAlbums) {
-        const info = fullAlbums[0];
-        const tracks = fullAlbums[1];
-        let albums = [];
-        for(let j=0; j < fullAlbums[0].length; j++)
-        {
-            let album = new Object();
-            let images = info[j]['images']
-    
-            album.cover = info[j]['images'][0]['url']
-            album.height = info[j]['images'][0]['height']
-            album.width = info[j]['images'][0]['width']
-            album.title = info[j]['name'];
-            album.tracks = undefined
-            album.artist = info[j]['name'];
-            albums.push(album);
-        }
-        console.log(albums);
-        /*
-        let tracksArray = [];
-        for(var i = 0; i < tracks.items.length; i++) {
-            tracksArray.push(tracks.items[i].name);
-        }
-        album.tracks = tracksArray;
-
-        console.log(album.tracks);
-        */
- 
-        return albums;
-
+    renderTitle() {
+        return (
+            <h1 className='text-center'>Add {this.state.album.title} to the list?</h1>
+        )
     }
-    handleChange(event) {
-        this.setState({searchQuery: event.target.value})
+    handleSelect(event) {
+        this.setState({
+            name: event.target.value
+        });
+    }
+
+    handleCheck(event) {
+        this.setState({
+            AOTW: event.target.checked
+        });
+        console.log(this.state.name);
+   
     }
     handleSubmit(event) {
         event.preventDefault();
-        //console.log(this.state.searchQuery)
-        const query = 'http://localhost:5000/search?q=' + this.state.searchQuery;
-        fetch(query , {
-            method: 'GET',
-          //  body: data,
-        })
-        .then(result => result.json())
-        .then(
-            res => {
-                const albums = this.generateAlbum(res)
-                this.setState({albums: albums})
-            })
-        .catch(e => console.log(e));
-    };
+        let newAlbum = this.state.album;
+        let user = this.state.name;
+        let isItTheAlbum = this.state.AOTW;
+        console.log(user);
+        newAlbum['user'] = user;
+        newAlbum['isAlbumOfTheWeek'] = isItTheAlbum;
+        const query = 'http://localhost:5001/albums/add';
+        console.log(this.state.album);
+        const { cookies } = this.props;
+        const token = cookies.get('token');
+        (async () => {
+
+            const res2 = await insertAlbum(query, token, newAlbum);
+        })();
+    }
     renderForm() {
         return (
             <Form onSubmit={this.handleSubmit}>
-            <Form.Control size='leg' type='text'
-            onChange={this.handleChange} placeholder='Search' />
-            <Button variant='primary' type='submit'>
-                Submit
-            </Button>
-        </Form>
-        )
+                <Form.Label>Who picked this album?</Form.Label>
+                <Form.Control as='select' name='name' 
+                onChange={this.handleSelect}
+                value={this.state.name}>
+                    <option value='Andrew'>Andrew</option>
+                    <option value='John'>John</option>
+                    <option value='Peter'>Peter</option>
+                    <option value='Stephen'>Stephen</option>
+                </Form.Control>
+                <Form.Check
+                name="isAlbumOfTheWeek"
+                label="This is the album of the week"
+                onChange={this.handleCheck}
+                >
+
+                </Form.Check>
+                <Button variant='primary' type='submit'>
+                    Submit
+                </Button>
+            </Form>
+        );
     }
 
-
     render () {
-        let albums = this.state.albums && this.state.albums.map(currentAlbum => (
-            <Album album={currentAlbum} />));
         return (
-            <section className='addalbum'>
-                <div className='search'>
-                    {this.renderForm()}
+            <section>
+                <div className='header'>
+                    {this.renderTitle()}
                 </div>
-                <div className='results'>
-                    {albums}
+                <div className='viewable'>
+                    <ViewableAlbum album={this.state.album}/>
                 </div>
+                {this.renderForm()}
             </section>
         )
     }
+
 }
 
-export default AddAlbum;
+export default withCookies(AddAlbum);

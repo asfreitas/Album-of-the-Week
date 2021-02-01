@@ -1,4 +1,4 @@
- import { getData, setHeaders } from './fetch'
+ import { getData } from './fetch'
 
 
 
@@ -9,28 +9,29 @@
     let headerDict = {
         'access_token': keepToken
     };
-    const headers = setHeaders(headerDict);
-    console.log(headers);
-    return getData(query, headers, 'GET');
+
+    return getData(query, headerDict, undefined, 'GET');
 
  }
  // make sure that 
  export function generateAlbum(fullAlbums) {
         const info = fullAlbums[0];
-        //const tracks = fullAlbums[1];
         let albums = [];
         for(let j=0; j < fullAlbums[0].length; j++)
         {
             console.log(info);
             let artwork = info[j]['images'][0]; 
             let artist = info[j]['artists'][0];
+            
             let album = {
                 cover: artwork['url'],
                 height: artwork['height'],
                 width: artwork['width'],
+                artist_id: artist['id'],
                 title: info[j]['name'],
                 tracks: undefined,
                 artist: artist['name'],
+                date: new Date(info[j]['release_date']),
                 _id: info[j]['id']
             }
 
@@ -48,9 +49,10 @@
         return albums;
 
     }
+
 // check if a new token is needed
 export function isTokenExpired(myToken) {
-    if(myToken === undefined) {return true;}
+    if(myToken === 'undefined' || myToken === undefined) {return true;}
     const token = myToken[0];
     const time = new Date(myToken[1]);
     const currentTime = new Date();

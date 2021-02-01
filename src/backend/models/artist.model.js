@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
 const artistSchema = mongoose.Schema({
+    artist_id: String,
     name: {
         type: String,
-        required: true,
-        unique: true
+        required: true
+        
     },
     genres: [mongoose.Schema.Types.String],
     albums: {
@@ -14,7 +15,8 @@ const artistSchema = mongoose.Schema({
         url: String,
         height: Number,
         width: Number
-    }
+    },
+    followers: Number
 
 })
 
