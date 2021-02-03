@@ -35,10 +35,8 @@ class Search extends React.Component {
         event.preventDefault();
         const { cookies } = this.props;
         const token = cookies.get('token');
-        console.log(token);
         const query = 'http://localhost:5001/search?q=' + this.state.searchQuery;
         (async () => {
-            console.log(token);
             const res = await getAlbums(query, token);
             console.log(res);
 

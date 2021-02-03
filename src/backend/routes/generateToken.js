@@ -12,16 +12,22 @@ const spotify_credentials = {
 }
 
 async function generateToken() {
-    let response = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        body: 'grant_type=client_credentials',
-        headers: {
-            'Authorization': encoded,
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    });
-    let body = response.json();
+    try{
+       const response = await fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            body: 'grant_type=client_credentials',
+            headers: {
+                'Authorization': encoded,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        
+    const body = response.json();
     return body;
+    }
+    catch(err) {
+        console.log("The error here is: " + err);
+    }
 }
 function getToken(req, res, next) {
     const token = req.headers['access_token'];

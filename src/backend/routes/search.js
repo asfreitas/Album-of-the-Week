@@ -35,10 +35,17 @@ router.route('/').get(generate.getToken, function(req, res, next){
     // send the data
     const tokenAndExpiration = [token, expiration];
     (async () => {
-        let albums = await searchSpotify(token, query);
-        console.log("The token at line 72 is " + token);
-        const fullAlbum = [albums.albums.items, tokenAndExpiration];
-        res.send(fullAlbum);
+        try {
+            let albums = await searchSpotify(token, query);
+            console.log("The token at line 72 is " + token);
+            console.log(albums);
+            const fullAlbum = [albums.albums.items, tokenAndExpiration];
+            res.send(fullAlbum);
+        }
+        catch(error) { 
+            console.log("The error is: " + error);
+        }
+
     })();
     
 });

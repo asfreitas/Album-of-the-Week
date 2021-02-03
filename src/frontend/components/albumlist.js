@@ -1,6 +1,5 @@
 import React from 'react';
-import Album from './albums/albumtile';
-
+import SelectableAlbum from './albums/selAlbum';
 import '../styles/albumgrid.css'
 
 class AlbumList extends React.Component {
@@ -19,23 +18,21 @@ class AlbumList extends React.Component {
             album : value
         })});
     }
-        render() {
-
-            let album = (
-                <section className='AlbumGrid'>
-                {
-                this.state.album && this.state.album.map(currentAlbum => (
-                         <Album album={currentAlbum} />
+    render() {
+        let album = (
+            <section className='AlbumGrid'>
+            {
+                this.state.album && this.state.album.map((currentAlbum, index) => (
+                        <SelectableAlbum album={currentAlbum} key={currentAlbum.album_id} />
                 ))
-                }
-                </section>
-                );
-        return ( 
-            <div>
-                {album}
-            </div>
-            
-        );
+            }
+            </section>
+            );
+    return ( 
+        <div>
+            {album}
+        </div>
+    );
     }
 }
 

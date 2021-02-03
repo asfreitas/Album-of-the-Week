@@ -4,7 +4,11 @@ const contentTypes = {
   'form': 'application/x-www-form-urlencoded'
 }
   export async function getData(url, headers=undefined) {
-    const myHeaders = setHeaders(headers);
+    let myHeaders = undefined;
+    if(headers){
+      myHeaders = setHeaders(headers);
+
+    }
     const response = await fetch(url, {
       headers: myHeaders,
       method: 'GET', 

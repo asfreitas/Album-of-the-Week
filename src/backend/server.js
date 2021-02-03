@@ -8,8 +8,6 @@ const usersRouter = require('./routes/users');
 const searchRouter = require('./routes/search');
 const bodyParser= require('body-parser');
 
-
-
 const app = express();
 
 require('dotenv').config();
@@ -22,7 +20,7 @@ app.use(express.json());
 //app.use(express.static(path.join(__dirname, "public")));
 mongoose.set('useCreateIndex', true);
 const mongo_uri = process.env.MONGO_URI;
-mongoose.connect(mongo_uri, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(mongo_uri, {useNewUrlParser: true, useUnifiedTopology: true,  useFindAndModify: false});
 const connection = mongoose.connection;
 
 connection.once('open', () => {

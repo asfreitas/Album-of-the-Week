@@ -2,7 +2,7 @@ import React from 'react';
 import ViewableAlbum from './albums/viewAlbum';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { getTracks, insertAlbum, getGenre } from '../helpers/albumHelper';
+import { insertAlbum } from '../helpers/albumHelper';
 import '../styles/addalbum.css';
 import { instanceOf } from 'prop-types';
 import { Cookies, withCookies } from 'react-cookie';
@@ -48,7 +48,6 @@ class AddAlbum extends React.Component {
         let newAlbum = this.state.album;
         let user = this.state.name;
         let isItTheAlbum = this.state.AOTW;
-        console.log(user);
         newAlbum['user'] = user;
         newAlbum['isAlbumOfTheWeek'] = isItTheAlbum;
         const query = 'http://localhost:5001/albums/add';

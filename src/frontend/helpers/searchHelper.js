@@ -32,7 +32,7 @@
                 tracks: undefined,
                 artist: artist['name'],
                 date: new Date(info[j]['release_date']),
-                _id: info[j]['id']
+                album_id: info[j]['id']
             }
 
             albums.push(album);

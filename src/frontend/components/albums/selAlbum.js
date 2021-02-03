@@ -14,16 +14,18 @@ class SelectableAlbum extends React.Component {
 
     }
     clickableLink() {
+        const path = '/albums/' + this.props.album['album_id'];
+        console.log(this.props.album['album_id']);
         return(
             <div>
                 <Link className="stretched-link"
-                to={{pathname:'addalbum', state: { album: this.props.album}}}></Link>
+                to={{pathname:path, state: { album: this.props.album}}}></Link>
             </div>
           
         );
     }
     render() { return (
-        <div className='selectable'>
+        <div className='selectable' >
             <Album link={this.clickableLink()} album={this.props.album}/>
         </div>
 
