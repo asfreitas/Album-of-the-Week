@@ -12,3 +12,16 @@ img {
 .stretched-link {
     z-index:-1;
 }
+
+.toasts {
+    background-color:blue;
+    color: blue;
+    position:absolute;
+    margin-left:10em;
+}
+.toasts .bodys{
+    background-color: white;
+}
+.thumbs-up {
+    margin: 5px;
+}

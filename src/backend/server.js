@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const albumsRouter = require('./routes/albums')
 const usersRouter = require('./routes/users');
 const searchRouter = require('./routes/search');
+const ratingsRouter = require('./routes/ratings');
 const bodyParser= require('body-parser');
 
 const app = express();
@@ -30,6 +31,7 @@ connection.once('open', () => {
 app.use('/albums', albumsRouter,);
 app.use('/users', usersRouter);
 app.use('/search', searchRouter);
+app.use('/ratings', ratingsRouter);
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`)
 });

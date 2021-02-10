@@ -64,7 +64,7 @@ class Search extends React.Component {
         const { cookies } = this.props;
         console.log(cookies.get('token'));
         let albums = this.state.albums && this.state.albums.map(currentAlbum => (
-            <SelectableAlbum album={currentAlbum} />));
+            <SelectableAlbum album={currentAlbum} addAlbum={true} />));
         return (
             <section className='myinfo'>
                 <div className='search'>

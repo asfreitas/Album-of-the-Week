@@ -13,10 +13,10 @@ class App extends Component {
               <main>
                   <Header/>
                   <Switch>
-                    <Route path='/addalbum' component={AddAlbum}/>
-                    <Route path='/albums/:albumId' component={AlbumViewer} />
-                    <Route path='/search' component={Search} />
-                    <Route path='/' component={List} /> 
+                    <Route exact path='/addalbum' component={AddAlbum}/>
+                    <Route exact path='/albums/:albumId' component={AlbumViewer} />
+                    <Route exact path='/search' component={Search} />
+                    <Route exact path='/' component={List} /> 
                   </Switch>
               </main>
         );

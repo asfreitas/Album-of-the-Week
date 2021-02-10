@@ -9,7 +9,8 @@ const artistSchema = mongoose.Schema({
     },
     genres: [mongoose.Schema.Types.String],
     albums: {
-        type: [mongoose.Schema.Types.ObjectId]
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Album'
     },
     image: {
         url: String,

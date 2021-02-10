@@ -3,9 +3,17 @@ const mongoose = require('mongoose');
 const trackSchema = mongoose.Schema({
     track_id: String,
     name: String,
-    number: Number,
     length: Number,
-    album: mongoose.Schema.Types.ObjectId
+    sample: String,
+    likes: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'User'
+    },
+    dislikes: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'User'
+    },
+    popularity: Number,
 });
 
 const Track = mongoose.model('Track', trackSchema);

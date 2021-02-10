@@ -1,15 +1,14 @@
 import React from 'react';
 import Album from './albumtile';
 
-
-function ViewableAlbum(props) {
+function UnclickableAlbum(props) {
     return (
         <div className='viewable'>
-            <Album album={props.album} />
+            <Album album={props.album} showStars={true} />
         </div>
     );
 
 }
 
 
-export default ViewableAlbum;
+export default UnclickableAlbum;

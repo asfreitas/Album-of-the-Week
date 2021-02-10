@@ -20,6 +20,7 @@ const contentTypes = {
   export async function postData(url, headers = undefined, body = undefined) {
     const myHeaders = setHeaders(headers);
     const myBody = setBody(body);
+    console.log(myBody);
     const response = await fetch(url, {
       headers: myHeaders,
       method: 'POST',
@@ -36,6 +37,7 @@ const contentTypes = {
 
 // when setting headers include a dictionary using both 'content' and 'access_token'
   function setHeaders(data) {
+    if(!data) return undefined;
     const content = contentTypes[data['content']]
     const token = data['access_token'];
     console.log(content);
@@ -53,6 +55,7 @@ const contentTypes = {
     for(x in data) {
       myData = x + "=" + data[x];
       formData += myData;
+
       formData += "&";
     }
     return formData;

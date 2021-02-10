@@ -1,6 +1,6 @@
 const fetch = require('../../tools/fetch');
 const Artist = require('../../models/artist.model');
-
+const Track = require('../../models/track.model');
 
 function parseTracks(tracklist) {
     let tracksArray = [];
@@ -9,7 +9,10 @@ function parseTracks(tracklist) {
         let track = {
             name: nextTrack['name'],
             length: nextTrack['duration_ms'],
-            track_id: nextTrack['id']
+            track_id: nextTrack['id'],
+            sample: nextTrack['preview_url'],
+            popularity: nextTrack['popularity']
+            
         }
         tracksArray.push(track);
     }
@@ -37,6 +40,17 @@ async function getTracks(token, id) {
     let body = fetch.getData(searchQuery, headers, undefined, 'GET');
 
     return body;
+}
+async function createNewTracks(trackList) {
+    let trackIds = [];
+    for(let x = 0; x < trackList.length; x++) {
+        let track = new Track(trackList[x]); // create the new album now
+        let myTrack = await track.save()
+        let track_id = myTrack._id;
+        trackIds.push(track_id);
+        //console.log(x);
+    }
+    return trackIds;
 }
 
 async function getArtistInfo(token, id) {
@@ -68,7 +82,7 @@ async function updateArtist(artistInfo, artist_id) {
     return artist;
 }
 
-async function createAlbum(album, artist, user) {
+async function createAlbum(album, artist, user, tracks) {
     album.save()
     .then(doc => {
         user.albums.push(doc._id);
@@ -84,4 +98,5 @@ module.exports = {
     createAlbum: createAlbum,
     updateArtist: updateArtist,
     getTracks: getTracks,
+    createNewTracks: createNewTracks
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import ViewableAlbum from './albums/viewAlbum';
+import UnclickableAlbum from './albums/UnclickableAlbum';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { insertAlbum } from '../helpers/albumHelper';
@@ -14,7 +14,6 @@ class AddAlbum extends React.Component {
     };
     constructor(props) {
         super(props);
-        const { cookies } = props;
 
         this.state = {
             album: props.location.state.album,
@@ -56,7 +55,7 @@ class AddAlbum extends React.Component {
         const token = cookies.get('token');
         (async () => {
 
-            const res2 = await insertAlbum(query, token, newAlbum);
+            await insertAlbum(query, token, newAlbum);
         })();
     }
     renderForm() {
@@ -92,7 +91,7 @@ class AddAlbum extends React.Component {
                     {this.renderTitle()}
                 </div>
                 <div className='viewable'>
-                    <ViewableAlbum album={this.state.album}/>
+                    <UnclickableAlbum album={this.state.album}/>
                 </div>
                 {this.renderForm()}
             </section>

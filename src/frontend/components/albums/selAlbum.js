@@ -13,8 +13,8 @@ class SelectableAlbum extends React.Component {
         this.clickableLink = this.clickableLink.bind(this);
 
     }
-    clickableLink() {
-        const path = '/albums/' + this.props.album['album_id'];
+    clickableLink() { 
+        const path = this.props.addAlbum ? 'addalbum/' : '/albums/' + this.props.album['album_id'];
         console.log(this.props.album['album_id']);
         return(
             <div>
