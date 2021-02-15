@@ -89,6 +89,8 @@ async function createAlbum(album, artist, user, tracks) {
         artist.albums.push(doc._id);
         artist.save();
         user.save();
+
+        return doc.album_id;
     });
 }
 module.exports = {

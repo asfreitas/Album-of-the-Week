@@ -8,6 +8,7 @@ img {
 .album {
     width: 50%;
     margin: 0 auto;
+    background-color:black;
 }
 .stretched-link {
     z-index:-1;

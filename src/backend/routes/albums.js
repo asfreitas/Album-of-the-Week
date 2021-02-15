@@ -9,31 +9,20 @@ const Track = require ('../models/track.model');
 
 
 
-router.route('/:albumId').get(function(req, res) {
+router.route('/album/:albumId').get(async function(req, res) {
     const albumId = req.params['albumId'];
+    const filter = {album_id: albumId};
+    
+    const album = await Album.getAlbum(filter);
+    res.json(album);
+});
 
-    Album.findOne({
-        album_id: albumId
-    })
-    .populate({
-        model: 'Track',
-        path: 'tracks',
-        populate : {
-            path: 'likes',
-            model: 'User',
-            select: {'username':1, '_id':0}
-        }
+router.route('/getWeeklyAlbum').get(async function(req,res) {
+    const filter = {isAlbumOfTheWeek: true};
 
-    })
-    .populate({
-        model: 'User',
-        path: 'user',
+    const album = await Album.getAlbum(filter);
+    res.json(album);
 
-    })
-    .exec(function(err, album) {
-        console.log(album.tracks[0].likes[0]);
-        res.json(album);
-    })
 });
 
 router.route('/likeTrack').post(async function(req, res) {
@@ -55,9 +44,7 @@ router.route('/').get((req, res) => {
     .then(albums => res.json(albums))
     .catch(err => res.status(400).json('Error: ' + err));
 });
-router.route('/favoriteSong').put((req, res) => {
 
-});
 
 router.route('/add').post(generate.getToken, async function(req, res, next){
     const token = res.locals.token;
@@ -84,12 +71,14 @@ router.route('/add').post(generate.getToken, async function(req, res, next){
     let tracks = await helpers.createNewTracks(helpers.parseTracks(trackList));
     album['tracks'] = tracks;
     const newAlbum = new Album(album);
-    album_id = helpers.createAlbum(newAlbum, artist, user, tracks);
-
-    // get tracklist
-
-    const url = 'http://localhost:3000/albums/' + album_id;
-    res.redirect(url)
+    newAlbum.save()
+    .then(doc => {
+        user.albums.push(doc._id);
+        artist.albums.push(doc._id);
+        artist.save();
+        user.save();
+        res.end();
+    });
 });
 
 module.exports = router;

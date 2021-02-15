@@ -23,7 +23,7 @@ class AlbumList extends React.Component {
             <section className='AlbumGrid'>
             {
                 this.state.album && this.state.album.map((currentAlbum, index) => (
-                        <SelectableAlbum album={currentAlbum} key={currentAlbum.album_id} />
+                        <SelectableAlbum showStars={false} album={currentAlbum} key={currentAlbum.album_id} />
                 ))
             }
             </section>

@@ -14,16 +14,34 @@ const albumSchema = mongoose.Schema({
     cover: String,
     date: Date,
     genres: [String],
-    isAlbumOfWeek: Boolean,
+    isAlbumOfTheWeek: Boolean,
     uri: String,
     user: mongoose.Schema.Types.ObjectId,
     ratings: [mongoose.Schema.Types.ObjectId]
 });
 
-albumSchema.methods.update = function(album) {
-    console.log(album);
-}
+albumSchema.statics.getAlbum = async function(filter) {
+    return this.findOne(filter).populate({
+        model: 'Track',
+        path: 'tracks',
+        populate : {
+            path: 'likes',
+            model: 'User',
+            select: {'username':1, '_id':0}
+        }
 
+        })
+        .populate({
+            model: 'User',
+            path: 'user',
+
+        })
+        .populate({
+            model: 'Rating',
+            path: 'ratings'
+        })
+        .exec();
+}
 const Album = mongoose.model('Album', albumSchema);
 
 module.exports = Album;

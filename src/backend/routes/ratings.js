@@ -5,12 +5,14 @@ const Rating = require('../models/rating.model');
 
 
 router.route('/addRating').post(function(req, res) {
-
-    const ratings = Rating.addRating('Andrew','5B4PYA7wNN4WdEXdIJu58a', 3.5);
+    const data = req.body;
+    Rating.addRating(data['username'],data['album_id'], data['rating']);
 });
 
 router.route('/updateRating').put(function(req,res) {
-
+    const data = req.body;
+    console.log(data);
+    Rating.updateRating(data['rating'], data['_id']);
 
 
 });

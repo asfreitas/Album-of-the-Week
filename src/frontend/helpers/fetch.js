@@ -3,27 +3,58 @@ const contentTypes = {
   'json': 'application/json',
   'form': 'application/x-www-form-urlencoded'
 }
+let headerDict = {
+  'access_token': undefined,
+  'content': 'form'
+};
   export async function getData(url, headers=undefined) {
     let myHeaders = undefined;
+
     if(headers){
       myHeaders = setHeaders(headers);
-
     }
-    const response = await fetch(url, {
-      headers: myHeaders,
-      method: 'GET', 
-    });
-    const data = await response.json();
-    return data;
+    try {
+      const response = await fetch(url, {
+        headers: myHeaders,
+        method: 'GET', 
+      });
+      const data = await response.json();
+      return data;
+    }
+    catch(error) {
+      console.log(error);
+    }
+
   }
   // 
-  export async function postData(url, headers = undefined, body = undefined) {
+  export async function postData(url, headers = headerDict, body = undefined) {
+    const myHeaders = setHeaders(headers);
+    const myBody = setBody(body);
+    const response = undefined;
+    try {
+      response = await fetch(url, {
+        headers: myHeaders,
+        method: 'POST',
+        body: myBody
+      });
+      const data = await response.json();
+      return data;
+    }
+    catch(err) {
+      console.log(err);
+    }
+
+
+
+  }
+
+  export async function putData(url, headers=headerDict, body=undefined) {
     const myHeaders = setHeaders(headers);
     const myBody = setBody(body);
     console.log(myBody);
     const response = await fetch(url, {
       headers: myHeaders,
-      method: 'POST',
+      method: 'PUT',
       body: myBody
     });
     const data = await response.json();
@@ -31,24 +62,18 @@ const contentTypes = {
 
   }
 
-  export async function putData(url, headers=undefined, body=undefined) {
-    return 0;
-  }
-
 // when setting headers include a dictionary using both 'content' and 'access_token'
   function setHeaders(data) {
     if(!data) return undefined;
-    const content = contentTypes[data['content']]
+    data['Content-Type'] = contentTypes[data['content']]
     const token = data['access_token'];
-    console.log(content);
-    const headers = new Headers({
-        'access_token': token,
-        'Content-Type': content
-    });
-    return headers;
+
+    return data;
   }
   //
   function setBody(data) {
+    if(!data)
+      return undefined;
     let formData = "";
     let myData = ""
     let x = "";

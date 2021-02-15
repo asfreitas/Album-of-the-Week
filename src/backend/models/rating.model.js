@@ -25,11 +25,22 @@ ratingSchema.statics.addRating = async function(username, album, rating) {
     // do the update
     const data = {album: albumId, user:userId, rating: rating};
     const newRating = new Rating(data);
-    newRating.save(function (err) {
+    newRating.save(function (err, rating) {
+
         if(err) console.log(err);
+        else{
+            albumName.ratings.push(rating._id);
+            albumName.save();
+        }
     });
 
 };
+ratingSchema.statics.updateRating = async function(newRating, _id) {
+    console.log(_id);
+    const getRating = await Rating.findById(mongoose.Types.ObjectId(_id));
+    getRating.rating = newRating;
+    getRating.save();
+}
 
 const Rating = mongoose.model('Rating', ratingSchema);
 

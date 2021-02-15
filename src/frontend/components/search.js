@@ -12,11 +12,12 @@ class Search extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
     };
+    
     constructor(props) {
         super(props);
         // instantiate cookies
-        const { cookies } = props;
-
+        const { cookies } = this.props;
+        console.log(cookies);
         this.state = {
             searchQuery: '',
             albums: undefined,

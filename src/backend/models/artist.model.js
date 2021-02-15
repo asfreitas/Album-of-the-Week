@@ -17,7 +17,9 @@ const artistSchema = mongoose.Schema({
         height: Number,
         width: Number
     },
-    followers: Number
+    followersOld: Number,
+    followersNew: Number
+
 
 })
 

@@ -37,8 +37,8 @@ router.route('/').get(generate.getToken, function(req, res, next){
     (async () => {
         try {
             let albums = await searchSpotify(token, query);
-            console.log("The token at line 72 is " + token);
-            console.log(albums);
+            //console.log("The token at line 72 is " + token);
+            //console.log(albums);
             const fullAlbum = [albums.albums.items, tokenAndExpiration];
             res.send(fullAlbum);
         }
@@ -51,48 +51,3 @@ router.route('/').get(generate.getToken, function(req, res, next){
 });
 
 module.exports = router;
-/*
-
-
-
-
-async function generateToken() {
-    let response = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        body: spotify_credentials['body'],
-        headers: spotify_credentials['header']
-    });
-    let token = await response.json();
-    return token;
-
-    generateToken().then(token => {
-        console.log("MONGO_URI" + env.MONGO_URI)
-        console.log(token);
-        fetch("https://api.spotify.com/v1/tracks/2TpxZ7JUBn3uw46aR7qd6V", {
-            method: 'GET',
-            headers: {
-                "Authorization": "Bearer " + token['access_token'],
-            }
-        }).then(response => response.json())
-        .then(data => console.log(data));
-    });
-        next();
-    }
-
-    let myToken = '';
-    let generateToken = async function() {
-        let token = generate.generateToken();
-        return token;
-    };
-
-generateToken().then(token => {
-    console.log(token);
-    fetch("https://api.spotify.com/v1/tracks/2TpxZ7JUBn3uw46aR7qd6V", {
-        method: 'GET',
-        headers: {
-            "Authorization": "Bearer " + token['access_token'],
-        }
-    }).then(response => response.json())
-    .then(data => console.log(data));
-});
-*/

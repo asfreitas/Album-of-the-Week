@@ -4,7 +4,7 @@ import Album from './albumtile';
 function UnclickableAlbum(props) {
     return (
         <div className='viewable'>
-            <Album album={props.album} showStars={true} />
+            <Album album={props.album} showStars={props.showStars}/>
         </div>
     );
 

@@ -1,12 +1,20 @@
 const router = require('express').Router();
 let User = require('../models/user.model');
 
-router.route('/').get((req, res) => {
-    User.find()
-    .then(users => console.log(res.json(users)))
-    .catch(err => res.status(400).json('Error: ' + err));
+router.route('/login').get(async function(req, res) {
+    console.log(req.headers);
+    const filter = {username: req.headers.username, password: req.headers.password}
+    const user = await User.findOne(filter, 'username').exec();
+    console.log(user);
+    res.send(user);
+
 });
 
+router.route('/getUsernames').get(async function(req, res) {
+    const users = await User.find(undefined, 'username').exec();
+    res.send(users);
+
+});
 router.route('/add').post((req, res) => {
     const username = req.body.username;
 
