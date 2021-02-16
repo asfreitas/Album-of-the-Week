@@ -1,17 +1,21 @@
 import { postData } from '../../../helpers/fetch';
 import React from 'react';
 import { ThumbsdownIcon, ThumbsupIcon} from '@primer/octicons-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import Toast from 'react-bootstrap/Toast';
 
 export function ThumbsUp(props) {
     return (
-        <ThumbsupIcon/>
+        <FontAwesomeIcon
+        icon={faThumbsUp}/>
     );
 }
 
 export function ThumbsDown(props) {
     return ( 
-        <ThumbsdownIcon/>
+        <FontAwesomeIcon
+        icon={faThumbsDown}/>
     );
 }
 

@@ -4,7 +4,12 @@ import './styles/album.css';
 import StarRating  from './components/stars';
 import { likeOnClick, Likes, ThumbsUp, ThumbsDown } from '../albums/components/likes';
 import {postData, putData } from '../../helpers/fetch';
+import { instanceOf } from 'prop-types';
+import { useCookies, withCookies, Cookies } from 'react-cookie';
 class Album extends React.Component {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
     constructor(props) {
         super(props);
 
@@ -17,32 +22,36 @@ class Album extends React.Component {
 
     }
     componentDidMount() {
-        console.log(this.props);
     }
     updateStars(initialValue, starsCount) {
+        const { cookies } = this.props;
         const data = {
-            username: 'Andrew',
+            username: cookies.get('user').username,
             album_id: this.props.album.album_id,
             rating: starsCount
         }
         let url = 'http://localhost:5001/ratings/';
         console.log( data);
         if(initialValue === 0) {
-            console.log(data);
             url += 'addRating';
             postData(url, undefined, data);
         }
-        else { 
+        else {
+            const { cookies } = this.props;
+            const name = cookies.get('user').username;
+            const myRating = this.props.album.ratings.filter(rating => rating.user.username === name);
             url += 'updateRating'
             console.log(data);
-            data['_id'] = this.props.album.ratings[0]._id
+            data['_id'] = myRating[0]._id
             putData(url, undefined, data);
         }
     }
     updateLike(index) {
         const newAlbum = this.state.album;
         let likes = newAlbum.tracks[index].likes;
-        let newName = {'username':'Andrew'}; // need to change this to update for logged in user
+        const { cookies } = this.props;
+        const name = cookies.get('user').username;
+        let newName = {'username': name}; // need to change this to update for logged in user
         likes.push(newName);
         this.setState({album: newAlbum});
     }
@@ -68,29 +77,47 @@ class Album extends React.Component {
 }
 
 function Ratings(props) {
-    const rating = props.ratings === undefined && props.ratings[0].rating || 0;
-    console.log(props.ratings[0].rating);
+    const [cookies]= useCookies(['user']);
+    const [loggedIn] = useCookies(['loggedin']);
+    if(!loggedIn.loggedin){
+        return;
+    }
+    const name = cookies.user.username;
+    const ratings = props.ratings;
+    const myRating = ratings.filter(rating => rating.user.username === name);
+    const otherRatings = ratings.filter(rating => rating.user.username !== name);
+    const rating = myRating.length === 0 ? 0 : myRating[0].rating;
     return (
         <>
-            <StarRating 
+            <h3>Your Rating:</h3>
+            <StarRating
+            key={rating._id}
             onClick={props.updateStars}
             allowEditing={true}
             value={rating}
+            size={'lg'}
             />
-            <OtherRatings ratings={props.ratings}/>
+            <OtherRatings ratings={otherRatings}/>
          </>
     )
 }
 
 function OtherRatings(props) {
     const ratings = props.ratings;
+    const otherRatings = ratings.map((rating, index) =>
+        <React.Fragment key={rating._id}>
+            <h6>{rating.user.username}</h6>
+            <StarRating
+            allowEditing={false}
+            value={rating.rating}
+            size={'sm'}
+            />
+         </React.Fragment>
+    );
+    console.log(otherRatings);
     return (
-        ratings.map(function(rating) {
-        <StarRating 
-        allowEditing={false}
-        value={rating}
-         />
-    }));
+        otherRatings
+   );
 
 }
 function Artist(props) {
@@ -150,4 +177,4 @@ function CoverArt(props){
 }
 
 
-export default Album;
+export default withCookies(Album);

@@ -8,9 +8,10 @@ import './stars.css';
 function StarRating(props) {
     const classNames = Array(props.starsCount || 5).fill('star');
     const initialValue = props.value || 0;
-    const allowEditing = props.allowEditing || true;
     const [starCount, setStars] = useState(initialValue);
     const [clicked, setClicked] = useState(false);
+    const allowEditing = props.allowEditing;
+    console.log(allowEditing)
 
     /* function namespace */
 
@@ -39,8 +40,11 @@ function StarRating(props) {
         }
     }
     function onMouseLeave() {
+        if(!allowEditing) {
+            return;
+        }
         if(!clicked) {
-            setStars(0);
+            setStars(initialValue);
         }
     }
     /*return stars*/
@@ -48,11 +52,12 @@ function StarRating(props) {
         <div>
             {classNames.map((star, index, array) =>
             <FontAwesomeIcon
+            key={index}
             className={`${star} ${starCount > index ? ' highlighted' : ''}`} 
             onMouseDown={() => onMouseDown(index) }
             onMouseEnter={() => onMouseEnter(index)}
             onMouseLeave={() => onMouseLeave()}
-            size="2x" 
+            size={props.size}
          icon={faStar}
          />
             )}
@@ -60,7 +65,9 @@ function StarRating(props) {
         )
 }
 
-
+StarRating.defaultProps = {
+    allowEditing: false
+}
 
 
 export default StarRating;

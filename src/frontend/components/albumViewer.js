@@ -29,7 +29,7 @@ class AlbumViewer extends React.Component {
     render() {
         let loaded = this.state.loaded;
         return(
-            loaded ? <UnclickableAlbum showStars={false} album={this.state.album}/> : 'loading'
+            loaded ? <UnclickableAlbum showStars={true} album={this.state.album}/> : 'loading'
         )
     }
 

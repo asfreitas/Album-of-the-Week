@@ -16,12 +16,19 @@ const albumSchema = mongoose.Schema({
     genres: [String],
     isAlbumOfTheWeek: Boolean,
     uri: String,
-    user: mongoose.Schema.Types.ObjectId,
-    ratings: [mongoose.Schema.Types.ObjectId]
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    ratings: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Rating'
+    }
 });
 
 albumSchema.statics.getAlbum = async function(filter) {
-    return this.findOne(filter).populate({
+    return this.findOne(filter)
+    .populate({
         model: 'Track',
         path: 'tracks',
         populate : {
@@ -29,16 +36,22 @@ albumSchema.statics.getAlbum = async function(filter) {
             model: 'User',
             select: {'username':1, '_id':0}
         }
-
         })
         .populate({
             model: 'User',
             path: 'user',
+            select: {'username':1, '_id':1}
 
         })
         .populate({
             model: 'Rating',
-            path: 'ratings'
+            path: 'ratings',
+            select: {'album':0},
+            populate: {
+                path:'user',
+                model: 'User',
+                select: {'username':1, '_id':1}
+            }
         })
         .exec();
 }

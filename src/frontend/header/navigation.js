@@ -9,8 +9,7 @@ function Navigation() {
     const [loggedIn, setLoggedIn, removeLoggedIn] = useCookies(['loggedin']);
 
     function checkLoggedIn() {
-        console.log(typeof cookies.user);
-        if(cookies.user === undefined || !loggedIn.loggedin) {
+        if(cookies.user === undefined || !JSON.parse(loggedIn.loggedin)) {
             return(
             <Login/>
             )

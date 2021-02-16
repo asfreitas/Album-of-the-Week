@@ -11,10 +11,7 @@ router.route('/addRating').post(function(req, res) {
 
 router.route('/updateRating').put(function(req,res) {
     const data = req.body;
-    console.log(data);
     Rating.updateRating(data['rating'], data['_id']);
-
-
 });
 
 module.exports = router; 

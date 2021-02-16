@@ -6,9 +6,6 @@ const helpers = require('./helpers/albumsHelper');
 const Artist = require('../models/artist.model');
 const Track = require ('../models/track.model');
 
-
-
-
 router.route('/album/:albumId').get(async function(req, res) {
     const albumId = req.params['albumId'];
     const filter = {album_id: albumId};
@@ -53,6 +50,16 @@ router.route('/add').post(generate.getToken, async function(req, res, next){
     let album_id = album['album_id'];
     let artist_id = album['artist_id'];
     
+    const isWeeklyAlbum = album['isAlbumOfTheWeek']
+    if(isWeeklyAlbum) {
+        const filter = {isAlbumOfTheWeek: true};
+        const oldWeeklyAlbum = await Album.getAlbum(filter);
+        if(oldWeeklyAlbum)
+        {
+            oldWeeklyAlbum.isAlbumOfTheWeek = false;
+            oldWeeklyAlbum.save();
+        }
+    }
 
     // get artist and update or insert the info
     let artistInfo = await helpers.getArtistInfo(token, artist_id);
