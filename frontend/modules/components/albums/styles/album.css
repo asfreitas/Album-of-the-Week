@@ -1,0 +1,72 @@
+
+img {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.ratings {
+    padding-left:20px !important;
+    padding-top:10px;
+
+}
+.accordian {
+    background-color:#343a40!important;
+}
+.albumInfo {
+    text-align:right;
+    border-bottom:none !important;
+}
+.artistInfo {
+    text-align:center;
+    text-overflow:ellipsis !important;
+    width: 40vh;
+    overflow:hidden;
+    white-space:nowrap;
+    z-index:10;
+}
+.artistInfo.selectable:hover {
+    overflow:visible;
+    text-overflow:unset;
+    height:auto;
+    white-space:normal;
+}
+.card-img-top.selectable {
+    max-width: 50vh;
+    max-height: 50vh;
+}
+.body {
+    padding-top:5px !important;
+}
+.card {
+    height:max-content;
+}
+.unClickable {
+    width:100vh;
+    justify-content: center;
+
+}
+
+.tracks {
+    margin-left:-50px;
+}
+
+.selectable {
+    margin: 10px auto !important;
+    height:max-content !important;
+}
+.stretched-link {
+    z-index:-1;
+}
+
+.toasts {
+    background-color:blue;
+    color: blue;
+    position:absolute;
+    margin-left:10em;
+}
+.toasts .bodys{
+    background-color: white;
+}
+.thumbs-up {
+    margin: 10px;
+    color:blue;
+}

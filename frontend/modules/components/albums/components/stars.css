@@ -1,0 +1,11 @@
+.star {
+    color: #909090;
+}
+
+.star:hover {
+    cursor:pointer;
+}
+
+.star.highlighted {
+    color: #FFFF33;
+}

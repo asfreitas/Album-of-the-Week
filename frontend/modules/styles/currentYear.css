@@ -1,0 +1,13 @@
+.getNewYear {
+    margin:auto;
+    width:50%;
+    text-align:center;
+    color:#f8f9fa!important;
+    padding-top:10px;
+    padding-bottom:25px;
+}
+
+.dateSelect {
+    width:50%;
+    margin:auto;
+}

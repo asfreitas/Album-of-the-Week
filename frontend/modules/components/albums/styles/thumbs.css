@@ -1,0 +1,14 @@
+.thumb {
+    margin-left:10px;
+    margin-right:10px;
+}
+.thumb:hover {
+    cursor:pointer;
+}
+.thumb.up.selected {
+    color:blue;
+}
+
+.thumb.down.selected {
+    color:red;
+}

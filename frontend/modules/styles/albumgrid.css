@@ -1,0 +1,16 @@
+.AlbumGrid {
+    padding:3vh;
+}
+
+.mainForm {
+    color: #f8f9fa;
+    padding-left:30vh;
+    padding-right:30vh;
+    max-width:75vh auto;
+    text-align:center;
+    width:max-content;
+}
+
+.checkBox {
+    text-align:left;
+}
