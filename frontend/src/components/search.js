@@ -18,6 +18,8 @@ class Search extends React.Component {
         super(props);
         // instantiate cookies
         const { cookies } = this.props;
+        console.log('hello')
+        console.log(process.env.API_URL)
         console.log(cookies);
         this.state = {
             searchQuery: '',
