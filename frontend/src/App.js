@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import Header from "./frontend/header/header";
-import List from "./frontend/components/albumlist";
-import Search from './frontend/components/search';
-import AddAlbum from './frontend/components/addAlbum';
-import AlbumViewer from './frontend/components/albumViewer';
-import Login from './frontend/components/login/login';
-import WeeklyAlbum from './frontend/components/albumOfTheWeek';
-import CurrentYear from './frontend/components/currentYear';
+import Header from "./header/header";
+import List from "./components/albumlist";
+import Search from './components/search';
+import AddAlbum from './components/addAlbum'
+import AlbumViewer from './components/albumViewer';
+import Login from './components/login/login';
+import WeeklyAlbum from './components/albumOfTheWeek';
+import CurrentYear from './components/currentYear';
 import {Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';

@@ -9,6 +9,9 @@ import { withCookies, Cookies } from 'react-cookie';
 import '../styles/albumgrid.css';
 import '../components/albums/styles/album.css';
 import '../styles/search.css';
+
+const API_URL = process.env.REACT_APP_API_URL;
+
 class Search extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
@@ -39,7 +42,7 @@ class Search extends React.Component {
         event.preventDefault();
         const { cookies } = this.props;
         const token = cookies.get('token');
-        const query = 'https://guardians-305413.wl.r.appspot.com/backend/addNew?q=' + this.state.searchQuery;
+        const query = API_URL + '/addNew?q=' + this.state.searchQuery;
 
         const res = await getAlbums(query, token);
 

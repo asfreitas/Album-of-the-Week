@@ -1,8 +1,12 @@
 import React from 'react';
 import CardDeck from 'react-bootstrap/CardDeck';
 import SelectableAlbum from './albums/selAlbum';
+import { getData } from '../helpers/fetch';
 import '../styles/albumgrid.css'
 import './albums/styles/album.css';
+
+const API_URL = process.env.REACT_APP_API_URL;
+
 class AlbumList extends React.Component {
     constructor(props) {
         super(props);
@@ -13,23 +17,19 @@ class AlbumList extends React.Component {
         }
         this.updateAlbums = this.updateAlbums.bind(this);
     }
-    updateAlbums() {
-        console.log(this.state.year);
+    async updateAlbums() {
         this.setState({year:this.props.year})
-        let url = 'https://guardians-305413.wl.r.appspot.com/backend/album';
+        let url = API_URL + '/backend/album';
+        console.log(url);
         if(this.props.currentYear) {
             url += '/year';
             if(this.props.year) {
                 url += '?year=' + this.props.year;
             }
         }
-        console.log(url);
-        var albums = getData(url);
-        albums.then(value => {
-            this.setState({album:undefined})
-            this.setState({
-            album : value
-        })});
+        var albums = await getData(url);
+        this.setState({album: undefined});
+        this.setState({album:albums})
     }
     componentDidMount() {
         this.updateAlbums();
@@ -56,9 +56,4 @@ class AlbumList extends React.Component {
     }
 }
 
-async function getData(url) {
-    let response = await fetch(url);
-    const data = await response.json();
-    return data;
-}
 export default AlbumList;

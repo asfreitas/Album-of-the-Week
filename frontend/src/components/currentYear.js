@@ -3,8 +3,10 @@ import AlbumList from './albumlist';
 import { getData, postData } from '../helpers/fetch';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-
 import '../styles/currentYear.css';
+
+const API_URL = process.env.REACT_APP_API_URL;
+
 class CurrentYear extends React.Component {
     constructor(props) {
         super(props);
@@ -18,9 +20,11 @@ class CurrentYear extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
     async componentDidMount() {
-        let years = await getData('https://guardians-305413.wl.r.appspot.com/backend/album/getYears');
+        const year_URL = API_URL + 'backend/album/getYears';
+        const date_URL = API_URL + 'backend/album/getWeeklyAlbum';
+        let years = await getData(year_URL);
         years.sort();
-        const date = await getData('https://guardians-305413.wl.r.appspot.com/backend/album/getWeeklyAlbum');
+        const date = await getData(date_URL);
         const releaseDate = new Date(date.releaseDate).getFullYear();
         this.setState({years:years})
         this.setState({year:releaseDate})

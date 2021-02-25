@@ -11,6 +11,10 @@ import { likeOnClick, dislikeOnClick, Likes, Dislikes, ThumbsUp, ThumbsDown } fr
 import {postData, putData } from '../../helpers/fetch';
 import { instanceOf } from 'prop-types';
 import { useCookies, withCookies, Cookies } from 'react-cookie';
+
+const API_URL = process.env.REACT_APP_API_URL;
+
+
 class Album extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
@@ -35,7 +39,7 @@ class Album extends React.Component {
             album_id: this.props.album.album_id,
             rating: starsCount
         }
-        let url = 'https://guardians-305413.wl.r.appspot.com/backend/ratings/';
+        let url = API_URL + '/backend/ratings/';
         if(initialValue === 0) {
             url += 'addRating';
             postData(url, undefined, data);

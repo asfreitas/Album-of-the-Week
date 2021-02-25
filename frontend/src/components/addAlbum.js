@@ -12,6 +12,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import './albums/styles/album.css';
 import '../styles/addalbum.css';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
+
 class AddAlbum extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
@@ -34,7 +37,8 @@ class AddAlbum extends React.Component {
         this.handleDate = this.handleDate.bind(this);
     }
     async componentDidMount() {
-        const users = await getData('https://guardians-305413.wl.r.appspot.com/backend/users/getUsernames');
+        const url = API_URL + '/backend/users/getUsernames';
+        const users = await getData(url);
         this.setState({users: users, loaded: true, name: users[0].username})
 
     }
@@ -65,7 +69,7 @@ class AddAlbum extends React.Component {
         newAlbum['user'] = user;
         newAlbum['isAlbumOfTheWeek'] = this.state.AOTW;
         newAlbum['date'] = this.state.date;
-        const query = 'https://guardians-305413.wl.r.appspot.com/backend/album/add';
+        const query = API_URL + '/album/add';
         console.log(this.state.album);
         const { cookies } = this.props;
         const token = cookies.get('token');

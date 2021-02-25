@@ -4,6 +4,8 @@ import { getData } from '../helpers/fetch';
 import { instanceOf } from 'prop-types';
 import { Cookies, withCookies } from 'react-cookie';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 class AlbumViewer extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
@@ -20,7 +22,7 @@ class AlbumViewer extends React.Component {
     async componentDidMount() {
         const albums = 
         this.props.isWeeklyAlbum ? 'getWeeklyAlbum' : '' + this.props.match.params.albumId;
-        const url = 'https://guardians-305413.wl.r.appspot.com/backend/album/' + albums;
+        const url = API_URL + '/backend/album/' + albums;
         console.log(url);
         let album = await getData(url);
         this.setState({album:album})
