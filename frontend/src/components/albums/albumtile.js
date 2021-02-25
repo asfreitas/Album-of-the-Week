@@ -74,7 +74,7 @@ class Album extends React.Component {
 
     render() {
             return(
-                <Card bg='dark' text='light' border='dark' className={`${this.props.albumClass} mx-auto`}>
+                <Card bg='dark' text='light' border='dark' className={`album ${this.props.albumClass} mx-auto`}>
                     <Header
                     artist={this.state.album.artist}
                     title={this.state.album.title}
