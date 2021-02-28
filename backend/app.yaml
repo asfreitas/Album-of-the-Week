@@ -1,0 +1,14 @@
+runtime: nodejs12
+
+manual_scaling:
+  instances: 1
+
+resources:
+  cpu: .5
+  memory_gb: 0.5
+  disk_size_gb: 10
+  
+env_variables:
+  MONGO_URI: "mongodb+srv://guardians:LOgvra8p98N30hAs@guardians-website.dc3nk.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  SPOTIFY_CLIENT: "9989af4006424014b87762693b4b7d06"
+  SPOTIFY_SECRET: "162ae647fc9a45c888065262a9c6af55"

@@ -25,3 +25,8 @@ yarn-debug.log*
 yarn-error.log*
 /backend/.env
 /frontend/.env
+/frontend/debug.log
+/backend/.gcloudignore
+/frontend/.gcloudignore
+/backend/nodemon.json
+.eslintcache

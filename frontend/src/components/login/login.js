@@ -5,6 +5,8 @@ import { instanceOf } from 'prop-types';
 import { Cookies, withCookies } from 'react-cookie';
 import { getData } from '../../helpers/fetch';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 class Login extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
@@ -23,7 +25,7 @@ class Login extends React.Component {
     }
     async handleSubmit(event) {
         event.preventDefault();
-        const url = 'https://guardians-305413.wl.r.appspot.com/backend/users/login';
+        const url = API_URL + '/backend/users/login';
         const headers = {
             'content': 'form',
             'username': this.state.username,

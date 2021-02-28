@@ -43,7 +43,7 @@ img {
     width:50vh;
     justify-content: center;
 }
-@media only screen and (min-width: 375px) and (max-width :768px) {
+@media only screen and (min-width: 896px) {
     .unClickable {
         width:100vh;
         justify-content: center;
