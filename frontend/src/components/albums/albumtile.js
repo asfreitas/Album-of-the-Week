@@ -7,7 +7,7 @@ import './styles/album.css';
 import AlbumInfo from './components/albuminfo';
 import Ratings from './components/ratings';
 import TrackList from './components/tracks';
-import {postData, putData } from '../../helpers/fetch';
+import { postData } from '../../helpers/fetch';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
@@ -34,25 +34,12 @@ class Album extends React.Component {
 
     updateStars(initialValue, starsCount) {
         const { cookies } = this.props;
-        const data = {
-            username: cookies.get('user').username,
-            album_id: this.props.album.album_id,
-            rating: starsCount
-        }
-        let url = API_URL + '/backend/ratings/';
-        if(initialValue === 0) {
-            url += 'addRating';
-            postData(url, undefined, data);
-        }
-        else {
-            const { cookies } = this.props;
-            const name = cookies.get('user').username;
-            const myRating = this.props.album.ratings.filter(rating => rating.user.username === name);
-            url += 'updateRating'
-            data['_id'] = myRating[0]._id
-            putData(url, undefined, data);
-        }
+        const name = cookies.get('user').username;
+        const data = setStarsData(name, this.props.album, starsCount);
+        const url = API_URL + '/backend/ratings/addRating';
+        postData(url, undefined, data);
     }
+
     updateLike(index) {
         const newAlbum = this.state.album;
         let likes = newAlbum.tracks[index].likes;
@@ -162,5 +149,17 @@ function CoverArt(props){
     );
 }
 
+function setStarsData(name, album, starsCount) {
+    const data = {
+        username: name,
+        album_id: album.album_id,
+        rating: starsCount
+    }
+    const myRating = album.ratings.filter(rating => rating.user.username === name);
+    if(myRating.length > 0) {
+        data['_id'] = myRating[0]._id
+    }
+    return data;
+}
 
 export default withCookies(Album);

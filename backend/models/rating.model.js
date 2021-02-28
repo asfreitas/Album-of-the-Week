@@ -23,21 +23,18 @@ ratingSchema.statics.addRating = async function(username, album, rating) {
     const userId = userName._id;
 
     // do the update
-    const data = {album: albumId, user:userId, rating: rating};
-    const newRating = new Rating(data);
-    newRating.save(function (err, rating) {
-
-        if(err) console.log(err);
-        else{
-            albumName.ratings.push(rating._id);
-            albumName.save();
-        }
-    });
-
+    const oldRating = {album: albumId, user:userId};
+    const update = {rating: rating};
+    const updateRating = await Rating.findOneAndUpdate(oldRating, update, {
+        new: true,
+        upsert: true
+    }).exec();
+    albumName.ratings.addToSet(updateRating._id);
+    albumName.save();
 };
 ratingSchema.statics.updateRating = async function(newRating, _id) {
     console.log(_id);
-    const getRating = await Rating.findById(mongoose.Types.ObjectId(_id));
+    const getRating = await Rating.findById(mongoose.Types.ObjectId(_id)).exec();
     getRating.rating = newRating;
     getRating.save();
 }
