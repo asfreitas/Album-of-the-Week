@@ -24,9 +24,8 @@ function searchSpotify(token, query) {
 
 router.route('/').get(async function(req, res, next){
     const token = await generate.getToken();
-    
+
     const query = req.query.q;
-    // send the data
 
     try {
         let albums = await searchSpotify(token, query);
