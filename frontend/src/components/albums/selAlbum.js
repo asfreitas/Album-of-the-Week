@@ -20,7 +20,6 @@ class SelectableAlbum extends React.Component {
                 <Link className="stretched-link"
                 to={{pathname:path, state: { album: this.props.album}}}></Link>
             </div>
-          
         );
     }
     render() { return (
@@ -29,8 +28,6 @@ class SelectableAlbum extends React.Component {
         </div>
 
     )}
-
-
 }
 
 

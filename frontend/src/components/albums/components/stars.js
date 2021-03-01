@@ -24,7 +24,7 @@ function StarRating(props) {
         else {
             setStars(index+1)
             setInitialValue(index+1);
-            props.onClick(initialValue, starCount);
+            props.onClick(starCount);
 
         }
         setClicked(!clicked);
