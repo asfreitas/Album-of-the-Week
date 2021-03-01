@@ -4,6 +4,7 @@ import { getData } from '../helpers/fetch';
 import { instanceOf } from 'prop-types';
 import { Cookies, withCookies } from 'react-cookie';
 
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 class AlbumViewer extends React.Component {
@@ -17,7 +18,6 @@ class AlbumViewer extends React.Component {
             album: undefined,
             loaded: false
         };
-        
     };
     async componentDidMount() {
         const albums = 
@@ -36,7 +36,6 @@ class AlbumViewer extends React.Component {
             </div>
         )
     }
-
 }
 
 

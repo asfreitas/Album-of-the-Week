@@ -21,8 +21,6 @@ class Search extends React.Component {
         super(props);
         // instantiate cookies
         const { cookies } = this.props;
-        console.log('hello')
-        console.log(process.env.API_URL)
         console.log(cookies);
         this.state = {
             searchQuery: '',
@@ -42,10 +40,10 @@ class Search extends React.Component {
         event.preventDefault();
         const { cookies } = this.props;
         const token = cookies.get('token');
-        const query = API_URL + '/addNew?q=' + this.state.searchQuery;
-
+        const query = API_URL + '/backend/addNew?q=' + this.state.searchQuery;
+        console.log('here');
         const res = await getAlbums(query, token);
-
+        console.log(res);
         const newToken = res[1];
         cookies.set('token', newToken, { path: '/'})
         const albums = generateAlbum(res);

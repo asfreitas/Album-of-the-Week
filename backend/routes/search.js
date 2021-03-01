@@ -1,5 +1,4 @@
 const router = require('express').Router();
-//const fetch = require('node-fetch');
 const generate = require('./generateToken');
 const fetch = require('../tools/fetch');
 
@@ -8,7 +7,7 @@ const fetch = require('../tools/fetch');
 
 
 // search for albums
-async function searchSpotify(token, query) {
+function searchSpotify(token, query) {
     const authorize = "Bearer " + token;
 
     const headers =  {
@@ -23,31 +22,26 @@ async function searchSpotify(token, query) {
 }
 
 
-router.route('/').get(generate.getToken, function(req, res, next){
+router.route('/').get(async function(req, res, next){
     const token = res.locals.token;
     const expires_in = res.locals.expires_in;
-
+    console.log(token);
     let expiration = new Date();
     expiration.setSeconds(expiration.getSeconds() + expires_in);
 
     const query = req.query.q;
     // send the data
     const tokenAndExpiration = [token, expiration];
-    (async () => {
-        try {
-            let albums = await searchSpotify(token, query);
-            //console.log("The token at line 72 is " + token);
-            console.log('Here it is in search:');
-            console.log( albums.albums.items[0])
-            const fullAlbum = [albums.albums.items, tokenAndExpiration];
-            res.send(fullAlbum);
-        }
-        catch(error) { 
-            console.log("The error is: " + error);
-        }
 
-    })();
-    
+    try {
+        let albums = await searchSpotify(token, query);
+
+        const fullAlbum = [albums.albums.items, tokenAndExpiration];
+        res.send(fullAlbum);
+    }
+    catch(error) { 
+        console.log("The error is: " + error);
+    }
 });
 
 module.exports = router;

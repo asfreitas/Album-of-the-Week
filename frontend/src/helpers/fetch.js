@@ -1,4 +1,3 @@
-import { CrossReferenceIcon } from "@primer/octicons-react";
 
 // headers should include 'json' or 'form' as the value to the key 'content'
 const contentTypes = {
@@ -7,7 +6,7 @@ const contentTypes = {
 }
 let headerDict = {
   'access_token': undefined,
-  'content': 'form'
+  'content': 'json'
 };
   export async function getData(url, headers=undefined) {
     let myHeaders = undefined;
@@ -33,29 +32,25 @@ let headerDict = {
   // 
   export async function postData(url, headers = headerDict, body = undefined) {
     const myHeaders = setHeaders(headers);
-    const myBody = setBody(body);
-
     const response = await fetch(url, {
       headers: myHeaders,
       method: 'POST',
-      body: myBody
+      body: JSON.stringify(body)
     });
-    if(response.status !== 501) {
+    if(response.status !== 501) { // needs to be fixed
       const data = await response.json();
       return data;
 
     }
-
   }
 
   export async function putData(url, headers=headerDict, body=undefined) {
     const myHeaders = setHeaders(headers);
-    const myBody = setBody(body);
-    console.log(myBody);
+
     const response = await fetch(url, {
       headers: myHeaders,
       method: 'PUT',
-      body: myBody
+      body: JSON.stringify(body)
     });
     const data = await response.json();
     return data;
@@ -65,7 +60,7 @@ let headerDict = {
 // when setting headers include a dictionary using both 'content' and 'access_token'
   function setHeaders(data) {
     if(!data) return undefined;
-    data['Content-Type'] = contentTypes[data['content']]
+    data['Content-Type'] = contentTypes['json']
     const token = data['access_token'];
 
     return data;
