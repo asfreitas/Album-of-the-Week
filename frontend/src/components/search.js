@@ -44,8 +44,6 @@ class Search extends React.Component {
         console.log('here');
         const res = await getAlbums(query, token);
         console.log(res);
-        const newToken = res[1];
-        cookies.set('token', newToken, { path: '/'})
         const albums = generateAlbum(res);
         this.setState({albums:undefined}) // albums were not updating when search again
         this.setState({albums: albums});

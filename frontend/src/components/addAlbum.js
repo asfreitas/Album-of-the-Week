@@ -69,7 +69,7 @@ class AddAlbum extends React.Component {
         newAlbum['user'] = user;
         newAlbum['isAlbumOfTheWeek'] = this.state.AOTW;
         newAlbum['date'] = this.state.date;
-        const query = API_URL + '/album/add';
+        const query = API_URL + '/backend/album/add';
         console.log(this.state.album);
         const { cookies } = this.props;
         const token = cookies.get('token');

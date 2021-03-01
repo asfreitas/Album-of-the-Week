@@ -23,20 +23,15 @@ function searchSpotify(token, query) {
 
 
 router.route('/').get(async function(req, res, next){
-    const token = res.locals.token;
-    const expires_in = res.locals.expires_in;
-    console.log(token);
-    let expiration = new Date();
-    expiration.setSeconds(expiration.getSeconds() + expires_in);
-
+    const token = await generate.getToken();
+    
     const query = req.query.q;
     // send the data
-    const tokenAndExpiration = [token, expiration];
 
     try {
         let albums = await searchSpotify(token, query);
 
-        const fullAlbum = [albums.albums.items, tokenAndExpiration];
+        const fullAlbum = [albums.albums.items];
         res.send(fullAlbum);
     }
     catch(error) { 

@@ -20,8 +20,8 @@ class CurrentYear extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
     async componentDidMount() {
-        const year_URL = API_URL + 'backend/album/getYears';
-        const date_URL = API_URL + 'backend/album/getWeeklyAlbum';
+        const year_URL = API_URL + '/backend/album/getYears';
+        const date_URL = API_URL + '/backend/album/getWeeklyAlbum';
         let years = await getData(year_URL);
         years.sort();
         const date = await getData(date_URL);
