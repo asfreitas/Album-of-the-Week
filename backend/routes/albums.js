@@ -1,12 +1,11 @@
 const router = require('express').Router();
-const generate = require('./generateToken');
+const generate = require('./helpers/tokens/generateToken');
 const Album = require('../models/album.model');
 const User = require('../models/user.model');
 const helpers = require('./helpers/albumsHelper');
 const Artist = require('../models/artist.model');
 const Track = require ('../models/track.model');
-const fetch = require ('../tools/fetch');
-const { set } = require('mongoose');
+const fetch = require ('./helpers/fetch');
 
 async function getWeeklyAlbum(req, res, next) {
     if(req.query.year) {
@@ -85,21 +84,18 @@ router.route('/year').get(getWeeklyAlbum, async function(req,res) {
     res.send(album);
 });
 
-router.route('/add').post(generate.getToken, async function(req, res, next){
-    console.log('adding');
-    const token = res.locals.token;
+router.route('/add').post(async function(req, res, next){
+    //console.log(req.body);
+    const token = await generate.getToken();
     let album = helpers.setupAlbum(req.body);
     let album_id = album['album_id'];
-    let artist_id = album['artist_id'];
-    
-    const authorize = "Bearer " + token;
+
     const headers =  {
-        'Authorization': authorize,
-        'Content-Type': 'application/json'
+        'Authorization': 'Bearer ' + token
     };
     const url = 'https://api.spotify.com/v1/albums/' + album_id;
     const request = await fetch.getData(url, headers, undefined, 'GET');
-    const artist = await helpers.getArtistInfo(token, request.artists[0].id);
+    const artist = await helpers.getArtistInfo(token, req.body.artist_id.id);
 
     // create or update artist name 
 

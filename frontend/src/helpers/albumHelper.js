@@ -7,7 +7,7 @@ export function insertAlbum(query, token, body) {
     const keepToken = isTokenExpired(token) ? undefined: token[0];
     let headerDict = {
         'access_token': keepToken,
-        'content': 'form'
+        'content': 'json'
     };
     return postData(query, headerDict, body);
 }

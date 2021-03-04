@@ -15,4 +15,4 @@ router.route('/updateRating').put(function(req,res) {
     Rating.updateRating(data['rating'], data['_id']);
 });
 
-module.exports = router; 
+module.exports = router;

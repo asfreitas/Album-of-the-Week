@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const generate = require('./generateToken');
-const fetch = require('../tools/fetch');
+const generate = require('./helpers/tokens/generateToken');
+const fetch = require('./helpers/fetch');
 
 
 // check for reusable token and create new one if necessary

@@ -1,4 +1,4 @@
-const fetch = require('../../tools/fetch');
+const fetch = require('./fetch');
 const Artist = require('../../models/artist.model');
 const Track = require('../../models/track.model');
 const Album = require('../../models/album.model');

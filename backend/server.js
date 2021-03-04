@@ -9,13 +9,13 @@ const usersRouter = require('./routes/users');
 const searchRouter = require('./routes/search');
 const ratingsRouter = require('./routes/ratings');
 const bodyParser= require('body-parser');
+const tokens = require('./routes/helpers/tokens/generateToken');
 
 const app = express();
 
 require('dotenv').config();
 
 const port = 8081;
-
 
 app.use(cors());
 app.use(express.json());
@@ -47,3 +47,5 @@ app.get('/*', function (req, res) {
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`)
 });
+
+tokens.tokenSetup(); // get a new token on setup of server

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const fetch = require('../tools/fetch');
+const fetch = require('../routes/helpers/fetch');
 const helpers = require('../routes/helpers/albumsHelper');
 
 const albumSchema = new mongoose.Schema({
