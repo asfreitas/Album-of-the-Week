@@ -1,11 +1,10 @@
 const router = require('express').Router();
-const generate = require('./helpers/tokens/generateToken');
 const fetch = require('./helpers/fetch');
-
+const TokenGenerator = require('./helpers/tokens/token');
 
 // check for reusable token and create new one if necessary
 
-
+const tokenGenerator = new TokenGenerator();
 // search for albums
 function searchSpotify(token, query) {
     const authorize = "Bearer " + token;
@@ -23,7 +22,7 @@ function searchSpotify(token, query) {
 
 
 router.route('/').get(async function(req, res, next){
-    const token = await generate.getToken();
+    const token = tokenGenerator.getToken();
 
     const query = req.query.q;
 

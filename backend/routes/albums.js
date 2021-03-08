@@ -1,11 +1,13 @@
 const router = require('express').Router();
-const generate = require('./helpers/tokens/generateToken');
+const helpers = require('./helpers/albumsHelper');
+const fetch = require ('./helpers/fetch');
 const Album = require('../models/album.model');
 const User = require('../models/user.model');
-const helpers = require('./helpers/albumsHelper');
 const Artist = require('../models/artist.model');
 const Track = require ('../models/track.model');
-const fetch = require ('./helpers/fetch');
+const TokenGenerator = require('./helpers/tokens/token');
+
+const tokenGenerator = new TokenGenerator();
 
 async function getWeeklyAlbum(req, res, next) {
     if(req.query.year) {
@@ -86,7 +88,7 @@ router.route('/year').get(getWeeklyAlbum, async function(req,res) {
 
 router.route('/add').post(async function(req, res, next){
     //console.log(req.body);
-    const token = await generate.getToken();
+    const token = tokenGenerator.getToken();
     let album = helpers.setupAlbum(req.body);
     let album_id = album['album_id'];
 
