@@ -22,13 +22,12 @@ function Ratings(props) {
     weekOf.setHours(weekOf.getHours() + weekOf.getTimezoneOffset()/60);
         return (
         <>
-            <h3>Your Rating:</h3>
             <StarRating
             key={rating._id}
             onClick={props.updateStars}
             allowEditing={true}
             value={rating}
-            size={'lg'}
+            size={'8x'}
             />
             {Number(currentTime) > Number(weekOf) &&
             <OtherRatings ratings={otherRatings}/>}
@@ -44,7 +43,7 @@ function OtherRatings(props) {
             <StarRating
             allowEditing={false}
             value={rating.rating}
-            size={'sm'}
+            size={'lg'}
             />
          </React.Fragment>
     );

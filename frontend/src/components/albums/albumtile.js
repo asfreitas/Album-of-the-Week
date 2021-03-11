@@ -3,7 +3,6 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import './styles/album.css';
 import AlbumInfo from './components/albuminfo';
 import Ratings from './components/ratings';
 import TrackList from './components/tracks';
@@ -11,9 +10,9 @@ import { postData } from '../../helpers/fetch';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
+import './styles/album.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
-
 
 class Album extends React.Component {
     static propTypes = {
@@ -96,9 +95,9 @@ function Body(props) {
         return null;
     }
     return (
-        <Container>
-                <Row>
-                    <Col lg={true} className='ratings'>
+        <Container fluid>
+                <Row className='justify-content-sm-center' xs={1} sm={1} md={1} lg={2}>
+                    <Col lg={9} className='ratings'>
                         <Ratings 
                             showStars={props.showStars}
                             className='stars'
@@ -106,7 +105,17 @@ function Body(props) {
                             ratings={props.ratings}
                             weekOf={props.weekOf}
                             />
-                        <Card.Body className='body'>
+
+                    </Col>
+                    <Col lg={3} className='albumInfo'>
+                        <AlbumInfo 
+                        user={props.user}
+                        date={props.date}
+                        />
+                    </Col>
+                </Row>
+                <Row className='ratings'>
+                <Card.Body className='body'>
                             <div className='info'>
                             </div>
                             <TrackList 
@@ -115,13 +124,6 @@ function Body(props) {
                             songs={props.songs}
                             />
                         </Card.Body>
-                    </Col>
-                    <Col className='albumInfo'>
-                        <AlbumInfo 
-                        user={props.user}
-                        date={props.date}
-                        />
-                    </Col>
                 </Row>
         </Container>
     )

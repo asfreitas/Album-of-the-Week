@@ -11,7 +11,9 @@ import {Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 class App extends Component {
-
+    componentDidMount() {
+        document.title = 'Album of the Week';
+    }
     render() {
         return (
               <main>

@@ -47,7 +47,6 @@ function StarRating(props) {
             setStars(initialValue);
         }
     }
-    /*return stars*/
     return (
         <div>
             {classNames.map((star, index, array) =>

@@ -11,4 +11,10 @@ main {
     min-height:100%;
     overflow-y:auto;
     overflow-x:hidden;
+    padding-top: 60px;
+
+}
+
+.mainBody {
+    padding-top: 300px;
 }

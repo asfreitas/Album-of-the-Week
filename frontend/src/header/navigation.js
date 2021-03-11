@@ -4,6 +4,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import  Nav  from 'react-bootstrap/Nav';
 import Login from '../components/login/login';
 import Logout from '../components/login/logout';
+
+import '../styles/header.css';
 function Navigation() {
     const [cookies, setUsername, removeUsername]= useCookies(['user']);
     const [loggedIn, setLoggedIn, removeLoggedIn] = useCookies(['loggedin']);
@@ -18,7 +20,7 @@ function Navigation() {
         else {
             return(
             <>
-            <h1 style={{color:'white'}}>Hello {cookies.user.username}</h1>
+            <h1 style={{color:'white'}}> {cookies.user.username}</h1>
                 <Logout/>
             </>
             )
@@ -26,14 +28,18 @@ function Navigation() {
     }
     
     return (
-            <Navbar bg='dark' variant='dark'>
+            <Navbar fixed='top' collapseOnSelect expand="lg" bg='dark' variant='dark'>
                 <Navbar.Brand href='/albums/weekly'>Album of the Week</Navbar.Brand>
-                <Nav className='mr-auto'>
-                    <Nav.Link href='/'>Albums</Nav.Link>
-                    <Nav.Link href='/year'>Year</Nav.Link>
-                    <Nav.Link href='/search'>Add New Album</Nav.Link>
-                </Nav>
-                {checkLoggedIn()}
+                <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+                <Navbar.Collapse id='responsive-navbar-nav'>
+                    <Nav className='mr-auto'>
+                        <Nav.Link href='/'>Albums</Nav.Link>
+                        <Nav.Link href='/year'>Year</Nav.Link>
+                        <Nav.Link href='/search'>Add New Album</Nav.Link>
+                    </Nav>
+                    {checkLoggedIn()}
+                </Navbar.Collapse>
+
             </Navbar>
     );
 
