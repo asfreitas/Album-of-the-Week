@@ -21,9 +21,9 @@ class TokenGenerator {
 
     }
 
-    getToken() {
+    async getToken() {
         if(this.isExpired()) {
-            this.generateNewToken();
+            await this.generateNewToken();
         }
         return this.token;
     }
@@ -35,6 +35,7 @@ class TokenGenerator {
     isExpired() {
         let expired = false;
         const timeNow = Date.now();
+
         if(timeNow > this.expireTime) {
             expired = true;
         }

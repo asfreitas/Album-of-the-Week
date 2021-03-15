@@ -22,7 +22,7 @@ function searchSpotify(token, query) {
 
 
 router.route('/').get(async function(req, res, next){
-    const token = tokenGenerator.getToken();
+    const token = await tokenGenerator.getToken();
 
     const query = req.query.q;
 
