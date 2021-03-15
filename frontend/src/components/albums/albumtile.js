@@ -28,8 +28,6 @@ class Album extends React.Component {
         }
         this.updateLike = this.updateLike.bind(this);
         this.updateStars = this.updateStars.bind(this);
-        this.updateDislike = this.updateDislike.bind(this);
-
     }
 
     async updateStars(starsCount) {
@@ -49,15 +47,7 @@ class Album extends React.Component {
         likes.push(newName);
         this.setState({album: newAlbum});
     }
-    updateDislike(index) {
-        const newAlbum = this.state.album;
-        let dislikes = newAlbum.tracks[index].dislikes;
-        const { cookies } = this.props;
-        const name = cookies.get('user').username;
-        let newName = {'username': name}; // need to change this to update for logged in user
-        dislikes.push(newName);
-        this.setState({album: newAlbum});
-    }
+
 
     render() {
             return(
