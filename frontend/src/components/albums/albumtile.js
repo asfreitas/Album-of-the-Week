@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import AlbumInfo from './components/albuminfo';
+import Header from './components/albumheader';
 import Ratings from './components/ratings';
 import TrackList from './components/tracks';
 import { postData } from '../../helpers/fetch';
@@ -61,31 +62,22 @@ class Album extends React.Component {
     render() {
             return(
                 <Card bg='dark' text='light' border='dark' className={`album ${this.props.albumClass} mx-auto`}>
-                    <Header
-                    artist={this.state.album.artist}
-                    title={this.state.album.title}
-                    className={this.props.albumClass}
+                    <Header 
+                        album={this.state.album}
+                        albumClass='unClickable'
                     />
-                    <CoverArt
-                     selectable={this.props.albumClass} 
-                     cover={this.state.album.cover}
-                     height={this.state.album.height} 
-                     width={this.state.album.width} 
-                     />
-                     {this.props.selectable && this.props.link}
-                    {!this.props.selectable &&
                     <Body
-                    weekOf={this.props.album.date}
-                    showStars={this.props.showStars}
-                    updateStars={this.updateStars}
-                    ratings={this.state.album.ratings}
-                    updateLike={this.updateLike}
-                    updateDislike={this.updateDislike}
-                    songs={this.state.album.tracks}
-                    user={this.state.album.user}
-                    date={this.state.album.releaseDate}
-                    showBody={this.props.showBody}
-                    />}
+                        weekOf={this.props.album.date}
+                        showStars={this.props.showStars}
+                        updateStars={this.updateStars}
+                        ratings={this.state.album.ratings}
+                        updateLike={this.updateLike}
+                        updateDislike={this.updateDislike}
+                        songs={this.state.album.tracks}
+                        user={this.state.album.user}
+                        date={this.state.album.releaseDate}
+                        showBody={this.props.showBody}
+                    />
                 </Card>
         );
     }
@@ -127,28 +119,6 @@ function Body(props) {
                 </Row>
         </Container>
     )
-}
-function Header(props) {
-    let name = '';
-    if(props.artist.name) {
-        name = props.artist.name;
-    }
-    else {
-        name = props.artist;
-    }
-    return(
-        <Card.Title className={`artistInfo ${props.className} `}
-        >
-           <h3>{props.title}</h3>
-           <h6>by {name}</h6>
-        </Card.Title>
-    )
-}
-
-function CoverArt(props){
-    return(
-        <Card.Img className={props.selectable} variant="top" src={props.cover}  />
-    );
 }
 
 function setStarsData(name, album, starsCount) {

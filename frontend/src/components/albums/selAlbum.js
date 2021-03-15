@@ -1,34 +1,29 @@
 import React from 'react';
-import Album from './albumtile';
 import { Link } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
+import Header from './components/albumheader';
 
+const SelectableAlbum = props => {
 
-class SelectableAlbum extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            album : null,
-            finished: false
-        }
-        this.clickableLink = this.clickableLink.bind(this);
+        const path = props.addAlbum ? 'addalbum/' : '/albums/' + props.album.album_id;
 
-    }
-    clickableLink() { 
-        const path = this.props.addAlbum ? 'addalbum/' : '/albums/' + this.props.album['album_id'];
-        return(
-            <div>
-                <Link className="stretched-link"
-                to={{pathname:path, state: { album: this.props.album}}}></Link>
-            </div>
-        );
-    }
-    render() { return (
-        <div className='selectable' >
-            <Album link={this.clickableLink()} selectable={true} albumClass='selectable' album={this.props.album}/>
-        </div>
-
-    )}
+        return (
+            <div className='selectable'>
+                <Card
+                    as='a'
+                    bg='dark'
+                    text='light'
+                    border='dark'
+                    className='album selectable mx-auto'
+                    href={path}
+                >
+                    <Header 
+                        album={props.album}
+                        albumClass='selectable'
+                    />
+                </Card>
+            </div> 
+    )
 }
-
 
 export default SelectableAlbum;
