@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { likeOnClick, dislikeOnClick, Likes, Dislikes, ThumbsUp, ThumbsDown } from './likes';
+import { likeOnClick, Likes, ThumbsUp } from './likes';
 import { useCookies} from 'react-cookie';
 
 import '../styles/tracks.css';
@@ -16,7 +16,6 @@ function TrackList(props) {
             song={song}
             index={index}
             likeOnClick={() => likeOnClick(cookies.user.username, song['track_id'], index, props.updateLike)}
-            dislikeOnClick={() => dislikeOnClick(cookies.user.username, song['track_id'], index, props.updateDislike)}
 
             />
         </div>
@@ -30,7 +29,6 @@ function TrackList(props) {
 }
 function Track(props) {
     const [showLikes, setShowLikes] = useState(false);
-    const [showDislikes, setShowDislikes] = useState(false);
     let song = props.song;
 
     const [cookies, setUsername, removeUsername]= useCookies(['user']);
@@ -47,13 +45,6 @@ function Track(props) {
             <div className='track'>
                 <div className='trackName'>
                     {song['name']}
-
-                    <span onClick={() => props.dislikeOnClick(cookies.user.username, song['track_id'], props.index)}
-                        onMouseEnter={() =>setShowDislikes(showDislikes => showDislikes=true)}
-                        onMouseLeave={() => setShowDislikes(showDislikes => showDislikes=false)}>
-                        <ThumbsDown showDislike={dislikedSong} className='thumbs-down float-right'/> 
-                        <Dislikes dislikes={song['dislikes']} showDislikes={showDislikes}/>
-                    </span>
                 </div>
                 <span
                         className='like'
