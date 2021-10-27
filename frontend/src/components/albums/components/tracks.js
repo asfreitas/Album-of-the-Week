@@ -42,20 +42,20 @@ function Track(props) {
 
     return (
         <li key={song['track_id']}>
-            <div className='track'>
+            <span className='tracks'>
                 <div className='trackName'>
                     {song['name']}
                 </div>
-                <span
+                <div
                         className='like'
                         onClick={() => props.likeOnClick(cookies.user.username, song['track_id'], props.index)}
                         onMouseEnter={() =>setShowLikes(showLikes => showLikes=true)}
                         onMouseLeave={() => setShowLikes(showLikes => showLikes=false)}>
                             <ThumbsUp showLike={likedSong} className='thumbs-up float-right'/>
                             <Likes likes={song['likes']} showLikes={showLikes} />
-                </span>
+                </div>
 
-            </div>
+            </span>
         </li>
     )};
 

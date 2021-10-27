@@ -64,10 +64,15 @@ router.route('/dislikeTrack').post(async function(req, res) {
 
 router.route('/').get((req, res) => {
     // don't display tracks when displaying all albums
-
+    console.log('here');
     Album.find({}, {tracks:0})
     .populate('artist')
-    .then(albums => res.json(albums))
+    .then(albums => {
+
+    
+        console.log(albums)
+        res.json(albums)
+    })
     .catch(err => res.status(400).json('Error: ' + err));
 });
 

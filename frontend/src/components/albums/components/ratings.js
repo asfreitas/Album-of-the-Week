@@ -27,7 +27,7 @@ function Ratings(props) {
             onClick={props.updateStars}
             allowEditing={true}
             value={rating}
-            size={'8x'}
+            size={'2x'}
             />
             {Number(currentTime) > Number(weekOf) &&
             <OtherRatings ratings={otherRatings}/>}

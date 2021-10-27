@@ -61,22 +61,6 @@ let headerDict = {
   function setHeaders(data) {
     if(!data) return undefined;
     data['Content-Type'] = contentTypes['json']
-    const token = data['access_token'];
 
     return data;
-  }
-  //
-  function setBody(data) {
-    if(!data)
-      return undefined;
-    let formData = "";
-    let myData = ""
-    let x = "";
-    for(x in data) {
-      myData = x + "=" + data[x];
-      formData += myData;
-
-      formData += "&";
-    }
-    return formData;
   }

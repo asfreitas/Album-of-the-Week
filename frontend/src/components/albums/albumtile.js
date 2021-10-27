@@ -21,7 +21,7 @@ class Album extends React.Component {
     };
     constructor(props) {
         super(props);
-        console.log(this.props.album);
+        console.log(props);
         this.state = {
             album: props.album,
             stars: props.defaultStars || 0
@@ -50,8 +50,9 @@ class Album extends React.Component {
 
 
     render() {
+        console.log(this.props);
             return(
-                <Card bg='dark' text='light' border='dark' className={`album ${this.props.albumClass} mx-auto`}>
+                <Card bg='dark' text='light' border='dark' className={`album unClickable mx-auto`}>
                     <Header 
                         album={this.state.album}
                         albumClass='unClickable'
@@ -89,7 +90,7 @@ function Body(props) {
                             />
 
                     </Col>
-                    <Col lg={3} className='albumInfo'>
+                    <Col lg={10} className='albumInfo'>
                         <AlbumInfo 
                         user={props.user}
                         date={props.date}
@@ -97,9 +98,8 @@ function Body(props) {
                     </Col>
                 </Row>
                 <Row className='ratings'>
-                <Card.Body className='body'>
-                            <div className='info'>
-                            </div>
+                        <Card.Body className='tracks'>
+
                             <TrackList 
                             updateLike={props.updateLike}
                             updateDislike={props.updateDislike}

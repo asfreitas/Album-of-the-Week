@@ -1,10 +1,10 @@
 import React from 'react';
-import UnclickableAlbum from './albums/UnclickableAlbum';
+import Album from './albums/albumtile';
 import { getData } from '../helpers/fetch';
 import { instanceOf } from 'prop-types';
 import { Cookies, withCookies } from 'react-cookie';
 
-
+import '../styles/albumview.css';
 const API_URL = process.env.REACT_APP_API_URL;
 
 class AlbumViewer extends React.Component {
@@ -13,7 +13,6 @@ class AlbumViewer extends React.Component {
     };
     constructor(props) {
         super(props);
-        const { cookies } = this.props;
         this.state = {
             album: undefined,
             loaded: false
@@ -25,14 +24,14 @@ class AlbumViewer extends React.Component {
         const url = API_URL + '/backend/album/' + albums;
         console.log(url);
         let album = await getData(url);
-        this.setState({album:album})
-        this.setState({loaded: true})
+        console.log(album);
+        this.setState({album:album});
+        this.setState({loaded: true});
     }
     render() {
-        let loaded = this.state.loaded;
         return(
             <div className='albumView'>
-                {loaded ? <UnclickableAlbum showBody={true} showStars={true} album={this.state.album}/> : 'loading'}
+                {this.state.loaded ? <Album showBody={true} showStars={true} album={this.state.album}/> : 'loading'}
             </div>
         )
     }

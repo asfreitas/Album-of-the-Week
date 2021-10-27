@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AlbumList from './albumlist';
-import { getData, postData } from '../helpers/fetch';
+import { getData } from '../helpers/fetch';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import '../styles/currentYear.css';

@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Header from './components/albumheader';
 
 const SelectableAlbum = props => {
-
+        console.log(props);
         const path = props.addAlbum ? 'addalbum/' : '/albums/' + props.album.album_id;
 
         return (

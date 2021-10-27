@@ -14,7 +14,7 @@ const app = express();
 
 require('dotenv').config();
 
-const port = 8081;
+const port = process.env.PORT || 80
 
 app.use(cors());
 app.use(express.json());
@@ -30,10 +30,11 @@ app.use('/backend/ratings', ratingsRouter);
 //app.use(express.static(path.join(__dirname, "build")));
 mongoose.set('useCreateIndex', true);
 const mongo_uri = process.env.MONGO_URI;
+
 mongoose.connect(mongo_uri, {useNewUrlParser: true, useUnifiedTopology: true,  useFindAndModify: false});
 const connection = mongoose.connection;
 connection.once('open', () => {
-    console.log("MongoDB database connection established");
+    console.log("MongoDB databases connection established");
 });
 
 console.log(path.join(__dirname,'build'));

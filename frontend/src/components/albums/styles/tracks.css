@@ -1,17 +1,17 @@
 .trackName {
-    font-size:300%;
+    font-size:150%;
     display: inline;
     text-overflow:ellipsis;
     overflow:hidden;
     white-space:nowrap;
     width: 50vw;
 }
-.track {
-    width:50vw;
+.tracks {
+    width:100vw;
     display:inline;
 }
 .like {
     display:inline;
-    font-size:300%;
+    font-size:150%;
     float:right;
 }

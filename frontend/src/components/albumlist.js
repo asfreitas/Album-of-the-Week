@@ -1,5 +1,5 @@
 import React from 'react';
-import CardDeck from 'react-bootstrap/CardDeck';
+import CardGroup from 'react-bootstrap/CardGroup';
 import SelectableAlbum from './albums/selAlbum';
 import { getData } from '../helpers/fetch';
 import '../styles/albumgrid.css'
@@ -16,6 +16,8 @@ class AlbumList extends React.Component {
             year: this.props.year
         }
         this.updateAlbums = this.updateAlbums.bind(this);
+        console.log(API_URL);
+
     }
     async updateAlbums() {
         this.setState({year:this.props.year})
@@ -28,6 +30,7 @@ class AlbumList extends React.Component {
             }
         }
         var albums = await getData(url);
+        console.log(albums);
         this.setState({album: undefined});
         this.setState({album:albums})
     }
@@ -44,14 +47,15 @@ class AlbumList extends React.Component {
     render() {
 
         let album = (
-                this.state.album && this.state.album.map((currentAlbum, index) => (
+                this.state.album && this.state.album.map((currentAlbum, index) =>
+                 (
                         <SelectableAlbum year={this.props.year} showStars={false} album={currentAlbum} key={currentAlbum.album_id} />
                 ))
             );
     return ( 
-            <CardDeck className='AlbumGrid'>
+            <CardGroup className='AlbumGrid'>
                 {album}
-            </CardDeck>
+            </CardGroup>
     );
     }
 }

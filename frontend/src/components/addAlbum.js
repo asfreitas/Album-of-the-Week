@@ -1,6 +1,7 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
-import UnclickableAlbum from './albums/UnclickableAlbum';
+//import UnclickableAlbum from './albums/UnclickableAlbum';
+import Album from './albums/albumtile';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { insertAlbum } from '../helpers/albumHelper';
@@ -111,7 +112,7 @@ class AddAlbum extends React.Component {
         else {
             return (
                 <>
-                    <UnclickableAlbum showBody={false} showStars={false} album={this.state.album}/>
+                    <Album showBody={false} showStars={false} album={this.state.album}/>
                     <div className='mainForm'>
                         {this.renderForm()}
                         <PickDate selected={this.state.date} handleDateChange={this.handleDate}/>

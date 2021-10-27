@@ -3,9 +3,9 @@ import { useCookies } from 'react-cookie';
 import Button from 'react-bootstrap/Button';
 
 
-function Logout() {
-    const [user, setCookies, removeCookies] = useCookies(['user']);
-    const [loggedIn, setLoggedIn, removeLoggedIn] = useCookies(['loggedin']);
+const Logout = () => {
+    const [ removeCookies ] = useCookies(['user']);
+    const [loggedIn, setLoggedIn] = useCookies(['loggedin']);
     function handleClick() {
         console.log(loggedIn.loggedin);
         removeCookies('user');

@@ -19,7 +19,6 @@ class Login extends React.Component {
             username: undefined,
             password: undefined
         }
-        const { cookies } = this.props;
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import SelectableAlbum from './albums/selAlbum';
-import CardDeck from 'react-bootstrap/CardDeck';
+import CardGroup from 'react-bootstrap/CardGroup';
 import { generateAlbum, getAlbums} from '../helpers/searchHelper'
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
@@ -25,7 +25,6 @@ class Search extends React.Component {
         this.state = {
             searchQuery: '',
             albums: undefined,
-            token: cookies.get('token') || undefined
         };
         // function bindings
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,9 +40,7 @@ class Search extends React.Component {
         const { cookies } = this.props;
         const token = cookies.get('token');
         const query = API_URL + '/backend/addNew?q=' + this.state.searchQuery;
-        console.log('here');
         const res = await getAlbums(query, token);
-        console.log(res);
         const albums = generateAlbum(res);
         this.setState({albums:undefined}) // albums were not updating when search again
         this.setState({albums: albums});
@@ -53,7 +50,7 @@ class Search extends React.Component {
     renderForm() {
         return (
             <Form className='searchBar' onSubmit={this.handleSubmit}>
-                <Form.Row >
+                <Form.Row>
                 <Form.Control type='text'
                 onChange={this.handleChange} placeholder='Search' />
                 </Form.Row>
@@ -71,12 +68,14 @@ class Search extends React.Component {
         return (
             <section className='searchMain'>
                     {this.renderForm()}
-                    <CardDeck className='AlbumGrid'>
+                    <CardGroup className='AlbumGrid'>
                         {albums}
-                    </CardDeck>
+                    </CardGroup>
             </section>
         )
     }
 }
+
+
 
 export default withCookies(Search);

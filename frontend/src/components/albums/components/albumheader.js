@@ -14,7 +14,7 @@ function Title(props) {
             className={`artistInfo ${props.className} `}
         >
            <h3>{props.title}</h3>
-           <h6>by {name}</h6>
+           <h6>{name}</h6>
         </Card.Title>
     )
 }
