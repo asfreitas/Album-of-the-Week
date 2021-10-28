@@ -1,6 +1,8 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { instanceOf } from 'prop-types';
 import { Cookies, withCookies } from 'react-cookie';
 import { getData } from '../../helpers/fetch';
@@ -49,21 +51,29 @@ class Login extends React.Component {
     render () {
         return (
             <Form inline onSubmit={this.handleSubmit} onChange={this.handleChange}>
-                <Form.Control size='leg'
-                    type='text'
-                    onChange={this.handleChange} 
-                    placeholder='username'
-                    name='username'
-                />
-                <Form.Control size='leg'
-                    type='text'
-                    onChange={this.handleChange} 
-                    placeholder='password'
-                    name='password'
-                />
-                <Button variant='primary' type='submit'>
-                    Login
-                </Button>
+                <Row>
+                    <Col>
+                        <Form.Control size='leg'
+                        type='text'
+                        onChange={this.handleChange} 
+                        placeholder='username'
+                        name='username'
+                        />
+                    </Col>
+                    <Col>
+                        <Form.Control size='leg'
+                        type='text'
+                        onChange={this.handleChange} 
+                        placeholder='password'
+                        name='password'
+                    />
+                    </Col>
+                    <Col>
+                        <Button variant='primary' type='submit'>
+                            Login
+                        </Button>
+                    </Col>
+                </Row>
             </Form>
         )
     }

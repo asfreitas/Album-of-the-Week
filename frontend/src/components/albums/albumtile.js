@@ -80,7 +80,7 @@ function Body(props) {
     return (
         <Container fluid>
                 <Row className='justify-content-sm-center' xs={1} sm={1} md={1} lg={2}>
-                    <Col lg={9} className='ratings'>
+                    <Col className='ratings'>
                         <Ratings 
                             showStars={props.showStars}
                             className='stars'
@@ -88,13 +88,15 @@ function Body(props) {
                             ratings={props.ratings}
                             weekOf={props.weekOf}
                             />
-
-                    </Col>
-                    <Col lg={10} className='albumInfo'>
+                            <p/><hr/>
                         <AlbumInfo 
                         user={props.user}
                         date={props.date}
                         />
+                        <hr/>
+                    </Col>
+                    <Col className='albumInfo'>
+
                     </Col>
                 </Row>
                 <Row className='ratings'>

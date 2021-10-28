@@ -4,11 +4,11 @@ import Button from 'react-bootstrap/Button';
 
 
 const Logout = () => {
-    const [ removeCookies ] = useCookies(['user']);
+    const [ , , removeCookie ] = useCookies(['user']);
     const [loggedIn, setLoggedIn] = useCookies(['loggedin']);
     function handleClick() {
         console.log(loggedIn.loggedin);
-        removeCookies('user');
+        removeCookie('user', {path:'/'});
         setLoggedIn('loggedin', false, {path: '/'});
     }
     return (

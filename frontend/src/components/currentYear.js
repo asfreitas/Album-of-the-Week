@@ -76,10 +76,7 @@ function Years(props) {
         return years
     else {
         years = props.years.map(function(year,index) {
-            let selected = false;
-            if(year === Number(props.year)) {
-                selected = true;
-            }
+
             return (
                 <option
                 key={year} 

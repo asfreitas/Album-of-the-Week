@@ -1,4 +1,4 @@
-import { getData, postData } from './fetch';
+import { postData } from './fetch';
 import { isTokenExpired } from './searchHelper';
 
 

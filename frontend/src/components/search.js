@@ -50,10 +50,8 @@ class Search extends React.Component {
     renderForm() {
         return (
             <Form className='searchBar' onSubmit={this.handleSubmit}>
-                <Form.Row>
                 <Form.Control type='text'
                 onChange={this.handleChange} placeholder='Search' />
-                </Form.Row>
               
                 <Button variant='primary' type='submit'>
                     Submit

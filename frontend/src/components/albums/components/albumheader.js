@@ -1,6 +1,5 @@
 import Card from 'react-bootstrap/Card';
 
-
 function Title(props) {
     let name = '';
     if(props.artist.name) {
@@ -26,19 +25,19 @@ function CoverArt(props) {
 }
 function Header(props) {
     return(
-    <>
-        <Title
-            artist={props.album.artist}
-            title={props.album.title}
-            className={props.albumClass}
-        />
-        <CoverArt
-            selectable={props.albumClass}
-            cover={props.album.cover}
-            height={props.album.height}
-            width={props.album.width}
-        />
-    </>
+        <>
+            <Title
+                artist={props.album.artist}
+                title={props.album.title}
+                className={props.albumClass}
+            />
+            <CoverArt
+                selectable={props.albumClass}
+                cover={props.album.cover}
+                height={props.album.height}
+                width={props.album.width}
+            />
+            </>
     )
 }
 export default Header;

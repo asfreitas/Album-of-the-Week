@@ -2,12 +2,6 @@ import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useState, useEffect } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Offcanvas from 'react-bootstrap/Offcanvas';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
 import  Nav  from 'react-bootstrap/Nav';
 import Login from '../components/login/login';
 import Logout from '../components/login/logout';
@@ -39,8 +33,8 @@ function useWindowDimensions() {
 
   const Signin = () => {
 
-    const [cookies, setUsername, removeUsername]= useCookies(['user']);
-    const [loggedIn, setLoggedIn, removeLoggedIn] = useCookies(['loggedin']);
+    const [cookies]= useCookies(['user']);
+    const [loggedIn] = useCookies(['loggedin']);
       if(!cookies.user || !loggedIn.loggedin || cookies.user === undefined || !JSON.parse(loggedIn.loggedin)) {
           return(
           <Login/>
@@ -56,12 +50,13 @@ function useWindowDimensions() {
       }
   }
 
-const Navigator = () => {
+const MobileNavigator = () => {
     return(
     <Navbar className='navbar' collapseOnSelect expand="lg" bg='dark' variant='dark'>
-        {Navigator}
-            <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-        <Navbar.Collapse id='responsive-navbar-nav'>
+    <Navbar.Brand href='/albums/weekly'>Album of the Week</Navbar.Brand>
+
+    <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+    <Navbar.Collapse id='responsive-navbar-nav'>
         <Nav className='mr-auto'>
             <Nav.Link href='/'>Albums</Nav.Link>
             <Nav.Link href='/year'>Year</Nav.Link>
@@ -69,20 +64,18 @@ const Navigator = () => {
         </Nav>
         <Signin/>
 
-        </Navbar.Collapse>
-        <Navbar.Brand href='/albums/weekly'>Album of the Week</Navbar.Brand>
+    </Navbar.Collapse>
 
     </Navbar>
             )
 }
-const MobileNavigator = () => {
+const Navigator = () => {
     return(
     <Navbar className='navbar' collapseOnSelect expand="lg" bg='dark' variant='dark'>
-        {Navigator}
-        <Navbar.Brand href='/albums/weekly'>Album of the Week</Navbar.Brand>
-            <Navbar.Toggle aria-controls='offcanvasNavbar' />
+        <Navbar.Toggle aria-controls='offcanvasNavbar' />
         <Navbar.Collapse id='offcanvasNavbar'>
         <Nav className='mr-auto'>
+            <Nav.Link href='/albums/weekly'>Album of the Week</Nav.Link>
             <Nav.Link href='/'>Albums</Nav.Link>
             <Nav.Link href='/year'>Year</Nav.Link>
             <Nav.Link href='/search'>Add New Album</Nav.Link>
@@ -98,7 +91,7 @@ const MobileNavigator = () => {
 const Navigation = () => {
     const { width } = useWindowDimensions();
     return (
-        width >= 768 ? <Navigator/> : <MobileNavigator/>
+        width < 768 ? <Navigator/> : <MobileNavigator/>
     );
 
 }

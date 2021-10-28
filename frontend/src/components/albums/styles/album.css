@@ -1,8 +1,11 @@
-
+hr {
+    background: black;
+    height:1px !important;
+}
 img {
     padding-left: 5px;
     padding-right: 5px;
-    height:50%;
+    height:auto;
     width:auto;
 }
 .ratings {

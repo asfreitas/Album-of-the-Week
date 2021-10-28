@@ -5,7 +5,7 @@ import { useCookies} from 'react-cookie';
 import '../styles/tracks.css';
 
 function TrackList(props) {
-    const [cookies, setUsername, removeUsername]= useCookies(['user']);
+    const [cookies]= useCookies(['user']);
 
     const songs = props.songs;
     if(!songs) return null;
@@ -16,7 +16,6 @@ function TrackList(props) {
             song={song}
             index={index}
             likeOnClick={() => likeOnClick(cookies.user.username, song['track_id'], index, props.updateLike)}
-
             />
         </div>
     );
@@ -31,12 +30,10 @@ function Track(props) {
     const [showLikes, setShowLikes] = useState(false);
     let song = props.song;
 
-    const [cookies, setUsername, removeUsername]= useCookies(['user']);
-    let dislikedSong = false;
+    const [cookies]= useCookies(['user']);
     let likedSong = false;
        // dislikedSong = song.dislikes.some(name => name.username === cookies.user.username); // https://stackoverflow.com/questions/8217419/how-to-determine-if-javascript-array-contains-an-object-with-an-attribute-that-e/8217584#8217584
        // likedSong = song.likes.some(name => name.username === cookies.user.username);
-    if(song.dislikes.length > 0) {dislikedSong = true;}
     if(song.likes.length > 0) {likedSong = true;}
 
 
