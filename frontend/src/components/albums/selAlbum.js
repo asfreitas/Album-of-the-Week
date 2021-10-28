@@ -2,10 +2,8 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Header from './components/albumheader';
 
-const SelectableAlbum = props => {
-        console.log(props);
+const SelectableAlbum = (props) => {
         const path = props.addAlbum ? 'addalbum/' : '/albums/' + props.album.album_id;
-
         return (
             <div className='selectable'>
                 <Card
@@ -24,5 +22,4 @@ const SelectableAlbum = props => {
             </div> 
     )
 }
-
 export default SelectableAlbum;

@@ -15,7 +15,23 @@ import '../styles/addalbum.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+const Users = (props) => {
+    const users = props.users;
+    return users.map((user) =>
+        <option key={user._id} onChange={props.handleChange} value={user.username}>{user.username}</option>
+    );
+}
 
+const PickDate = (props) => {
+    return (
+        <DatePicker
+            selected={props.selected}
+            onChange={props.handleDateChange}
+            showTimeSelect
+            dateFormat="Pp"
+        />
+    )
+}
 class AddAlbum extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
@@ -124,21 +140,5 @@ class AddAlbum extends React.Component {
     }
 
 }
-function Users(props) {
-    const users = props.users;
-    return users.map((user) =>
-        <option key={user._id} onChange={props.handleChange} value={user.username}>{user.username}</option>
-    );
-}
 
-function PickDate(props) {
-    return (
-        <DatePicker
-            selected={props.selected}
-            onChange={props.handleDateChange}
-            showTimeSelect
-            dateFormat="Pp"
-        />
-    )
-}
 export default withCookies(AddAlbum);

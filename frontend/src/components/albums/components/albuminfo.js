@@ -1,6 +1,6 @@
 import '../styles/albuminfo.css';
 
-function AlbumInfo(props) {
+export default function AlbumInfo(props){
     const name = props.user.username;
     const fullDate = new Date(props.date).toDateString();
     return (
@@ -11,5 +11,3 @@ function AlbumInfo(props) {
 
     );
 }
-
-export default AlbumInfo;

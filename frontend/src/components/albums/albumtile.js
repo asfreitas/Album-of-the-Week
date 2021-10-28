@@ -15,13 +15,64 @@ import './styles/album.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+const Body = (props) => {
+    if(!props.showBody) {
+        return null;
+    }
+    return (
+        <Container fluid>
+                <Row className='justify-content-sm-center' xs={1} sm={1} md={1} lg={2}>
+                    <Col className='ratings'>
+                        <Ratings 
+                            showStars={props.showStars}
+                            className='stars'
+                            updateStars={props.updateStars}
+                            ratings={props.ratings}
+                            weekOf={props.weekOf}
+                            />
+                            <p/><hr/>
+                        <AlbumInfo 
+                            user={props.user}
+                            date={props.date}
+                        />
+                        <hr/>
+                    </Col>
+                    <Col className='albumInfo'>
+
+                    </Col>
+                </Row>
+                <Row className='ratings'>
+                        <Card.Body className='tracks'>
+                            <TrackList 
+                                updateLike={props.updateLike}
+                                updateDislike={props.updateDislike}
+                                songs={props.songs}
+                            />
+                        </Card.Body>
+                </Row>
+        </Container>
+    )
+}
+
+function setStarsData(name, album, starsCount) {
+    const data = {
+        username: name,
+        album_id: album.album_id,
+        rating: starsCount
+    }
+    const myRating = album.ratings.filter(rating => rating.user.username === name);
+    if(myRating.length > 0) {
+        data['_id'] = myRating[0]._id
+    }
+    return data;
+}
+
 class Album extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
     };
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             album: props.album,
             stars: props.defaultStars || 0
@@ -50,7 +101,6 @@ class Album extends React.Component {
 
 
     render() {
-        console.log(this.props);
             return(
                 <Card bg='dark' text='light' border='dark' className={`album unClickable mx-auto`}>
                     <Header 
@@ -72,58 +122,6 @@ class Album extends React.Component {
                 </Card>
         );
     }
-}
-function Body(props) {
-    if(!props.showBody) {
-        return null;
-    }
-    return (
-        <Container fluid>
-                <Row className='justify-content-sm-center' xs={1} sm={1} md={1} lg={2}>
-                    <Col className='ratings'>
-                        <Ratings 
-                            showStars={props.showStars}
-                            className='stars'
-                            updateStars={props.updateStars}
-                            ratings={props.ratings}
-                            weekOf={props.weekOf}
-                            />
-                            <p/><hr/>
-                        <AlbumInfo 
-                        user={props.user}
-                        date={props.date}
-                        />
-                        <hr/>
-                    </Col>
-                    <Col className='albumInfo'>
-
-                    </Col>
-                </Row>
-                <Row className='ratings'>
-                        <Card.Body className='tracks'>
-
-                            <TrackList 
-                            updateLike={props.updateLike}
-                            updateDislike={props.updateDislike}
-                            songs={props.songs}
-                            />
-                        </Card.Body>
-                </Row>
-        </Container>
-    )
-}
-
-function setStarsData(name, album, starsCount) {
-    const data = {
-        username: name,
-        album_id: album.album_id,
-        rating: starsCount
-    }
-    const myRating = album.ratings.filter(rating => rating.user.username === name);
-    if(myRating.length > 0) {
-        data['_id'] = myRating[0]._id
-    }
-    return data;
 }
 
 export default withCookies(Album);

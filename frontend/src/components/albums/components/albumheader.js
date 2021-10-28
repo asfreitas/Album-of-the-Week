@@ -1,6 +1,6 @@
 import Card from 'react-bootstrap/Card';
 
-function Title(props) {
+const Title = (props) => {
     let name = '';
     if(props.artist.name) {
         name = props.artist.name;
@@ -18,12 +18,12 @@ function Title(props) {
     )
 }
 
-function CoverArt(props) {
+const CoverArt = (props) => {
     return(
         <Card.Img className={props.selectable} variant='top' src={props.cover}  />
     );
 }
-function Header(props) {
+export default function Header(props) {
     return(
         <>
             <Title
@@ -40,4 +40,3 @@ function Header(props) {
             </>
     )
 }
-export default Header;

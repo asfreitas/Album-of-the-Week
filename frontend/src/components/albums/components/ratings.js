@@ -2,9 +2,26 @@ import React from 'react';
 import StarRating from './stars';
 import { useCookies } from 'react-cookie';
 
+// consists of ratings from other users
+const OtherRatings = (props) => {
+    const ratings = props.ratings;
+    const otherRatings = ratings.map((rating, index) =>
+        <React.Fragment key={rating._id}>
+            <h6>{rating.user.username}</h6>
+            <StarRating
+            allowEditing={false}
+            value={rating.rating}
+            size={'lg'}
+            />
+         </React.Fragment>
+    );
+    return (
+        otherRatings
+   );
 
+}
 
-function Ratings(props) {
+export default function Ratings(props) {
     const [cookies]= useCookies(['user']);
     const [loggedIn] = useCookies(['loggedin']);
     if(!cookies.user || !loggedIn.loggedin || !JSON.parse(loggedIn.loggedin) || !props.showStars) {
@@ -34,23 +51,3 @@ function Ratings(props) {
          </>
     )
 }
-
-function OtherRatings(props) {
-    const ratings = props.ratings;
-    const otherRatings = ratings.map((rating, index) =>
-        <React.Fragment key={rating._id}>
-            <h6>{rating.user.username}</h6>
-            <StarRating
-            allowEditing={false}
-            value={rating.rating}
-            size={'lg'}
-            />
-         </React.Fragment>
-    );
-    return (
-        otherRatings
-   );
-
-}
-
-export default Ratings;

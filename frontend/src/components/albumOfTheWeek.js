@@ -1,5 +1,6 @@
 import AlbumViewer from './albumViewer';
-function WeeklyAlbum() {
+
+const WeeklyAlbum = () => {
     return (
         <AlbumViewer isWeeklyAlbum={true}/>
     )

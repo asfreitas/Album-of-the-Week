@@ -7,6 +7,56 @@ import '../styles/currentYear.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+const Years = (props) => {
+    let years = null;
+    if(props.years === undefined)
+        return years
+    else {
+        years = props.years.map(function(year,index) {
+
+            return (
+                <option
+                key={year} 
+                onChange={props.handleChange} 
+                value={year}
+                >{year}
+               
+                </option>
+            )
+
+        });
+    }
+    return years;
+
+}
+
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
+const GetNewYear = (props) => {
+    if(!props.showYear) {
+        return null;
+    }
+    if(!props.dates)
+        return null;
+
+    const year = getRandomYear(props.dates);
+    return (
+        <h4>{year}</h4>
+    );
+}
+
+//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
+function getRandomYear(oldYears) {
+    let range = (start, stop, step) => Array.from({length:(stop-start) / step + 1}, (_,i) => start + (i*step));
+    let array = range(1965,2021, 1).filter(value => !oldYears.includes(value));
+
+    return(array[getRandomInt(array.length)])
+
+}
+
 class CurrentYear extends React.Component {
     constructor(props) {
         super(props);
@@ -70,52 +120,6 @@ class CurrentYear extends React.Component {
         )
     }
 }
-function Years(props) {
-    let years = null;
-    if(props.years === undefined)
-        return years
-    else {
-        years = props.years.map(function(year,index) {
 
-            return (
-                <option
-                key={year} 
-                onChange={props.handleChange} 
-                value={year}
-                >{year}
-               
-                </option>
-            )
-
-        });
-    }
-    return years;
-
-}
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from
-function GetNewYear(props) {
-    if(!props.showYear) {
-        return null;
-    }
-    if(!props.dates)
-        return null;
-
-    const year = getRandomYear(props.dates);
-    return (
-        <h4>{year}</h4>
-    );
-}
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-}
-
-function getRandomYear(oldYears) {
-    let range = (start, stop, step) => Array.from({length:(stop-start) / step + 1}, (_,i) => start + (i*step));
-    let array = range(1965,2021, 1).filter(value => !oldYears.includes(value));
-
-    return(array[getRandomInt(array.length)])
-
-}
 
 export default CurrentYear;

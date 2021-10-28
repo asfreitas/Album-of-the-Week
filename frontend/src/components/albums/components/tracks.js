@@ -4,29 +4,7 @@ import { useCookies} from 'react-cookie';
 
 import '../styles/tracks.css';
 
-function TrackList(props) {
-    const [cookies]= useCookies(['user']);
-
-    const songs = props.songs;
-    if(!songs) return null;
-    
-    const items = songs.map((song, index) => 
-        <div key={index}>
-            <Track
-            song={song}
-            index={index}
-            likeOnClick={() => likeOnClick(cookies.user.username, song['track_id'], index, props.updateLike)}
-            />
-        </div>
-    );
-
-    return(
-        <ul className='list-unstyled'>
-            {items}
-        </ul>
-    )
-}
-function Track(props) {
+const Track = (props) => {
     const [showLikes, setShowLikes] = useState(false);
     let song = props.song;
 
@@ -56,4 +34,25 @@ function Track(props) {
         </li>
     )};
 
-export default TrackList;
+export default function TrackList(props) {
+    const [cookies]= useCookies(['user']);
+
+    const songs = props.songs;
+    if(!songs) return null;
+    
+    const items = songs.map((song, index) => 
+        <div key={index}>
+            <Track
+            song={song}
+            index={index}
+            likeOnClick={() => likeOnClick(cookies.user.username, song['track_id'], index, props.updateLike)}
+            />
+        </div>
+    );
+
+    return(
+        <ul className='list-unstyled'>
+            {items}
+        </ul>
+    )
+}
