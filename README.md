@@ -12,4 +12,4 @@ Here are some `screenshots` of it in action:
 
 `Album-of-the-Week` also looks and works great on mobile:
 
-![Mobile](https://i.imgur.com/sBxIFUT.jpg)
+![Mobile](https://i.imgur.com/ZDceEgs.jpg)
