@@ -12,3 +12,10 @@
 .thumb.down.selected {
     color:red;
 }
+
+.toasts {
+    position:absolute;
+    right:4vw;
+}
+.bodys {
+}

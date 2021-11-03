@@ -1,25 +1,32 @@
 import React from 'react';
+import {Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Header from './components/albumheader';
+
+import './styles/album.css';
 
 const SelectableAlbum = (props) => {
         const path = props.addAlbum ? 'addalbum/' : '/albums/' + props.album.album_id;
         return (
-            <div className='selectable'>
+            <Link to={{
+                pathname: path,
+                state: {
+                    album: props.album
+                }
+                }}>
                 <Card
-                    as='a'
                     bg='dark'
                     text='light'
-                    border='dark'
-                    className='album selectable mx-auto'
-                    href={path}
-                >
+                    border='light'
+                    className='sel-album mb-3 '
+                    album={props.album}>
                     <Header 
                         album={props.album}
                         albumClass='selectable'
                     />
                 </Card>
-            </div> 
+            </Link>
+         
     )
 }
 export default SelectableAlbum;

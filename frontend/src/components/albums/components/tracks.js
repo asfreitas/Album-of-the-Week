@@ -13,20 +13,20 @@ const Track = (props) => {
        // dislikedSong = song.dislikes.some(name => name.username === cookies.user.username); // https://stackoverflow.com/questions/8217419/how-to-determine-if-javascript-array-contains-an-object-with-an-attribute-that-e/8217584#8217584
        // likedSong = song.likes.some(name => name.username === cookies.user.username);
     if(song.likes.length > 0) {likedSong = true;}
-
-
+    let username = null;
+    if (cookies.user) {username = cookies.user.username;}
     return (
         <li key={song['track_id']}>
-            <span className='tracks'>
+            <span className='track'>
                 <div className='trackName'>
                     {song['name']}
                 </div>
                 <div
                         className='like'
-                        onClick={() => props.likeOnClick(cookies.user.username, song['track_id'], props.index)}
+                        onClick={() => props.likeOnClick(username, song['track_id'], props.index)}
                         onMouseEnter={() =>setShowLikes(showLikes => showLikes=true)}
                         onMouseLeave={() => setShowLikes(showLikes => showLikes=false)}>
-                            <ThumbsUp showLike={likedSong} className='thumbs-up float-right'/>
+                            <ThumbsUp showLike={likedSong} className='thumbs-up'/>
                             <Likes likes={song['likes']} showLikes={showLikes} />
                 </div>
 
@@ -37,15 +37,19 @@ const Track = (props) => {
 export default function TrackList(props) {
     const [cookies]= useCookies(['user']);
 
+    let username = null;
+    if (cookies.user) {username = cookies.user.username;}
+
+
     const songs = props.songs;
     if(!songs) return null;
     
     const items = songs.map((song, index) => 
-        <div key={index}>
+        <div className='tracks' key={index}>
             <Track
             song={song}
             index={index}
-            likeOnClick={() => likeOnClick(cookies.user.username, song['track_id'], index, props.updateLike)}
+            likeOnClick={() => likeOnClick(username, song['track_id'], index, props.updateLike)}
             />
         </div>
     );

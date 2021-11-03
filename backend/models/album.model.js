@@ -14,7 +14,7 @@ const albumSchema = new mongoose.Schema({
         ref: 'Track'
     },
     cover: String,
-    releaseDate: Date,
+    releaseDate: String,
     date:Date,
     isAlbumOfTheWeek: Boolean,
     user: {
@@ -70,13 +70,23 @@ albumSchema.statics.getAlbum = async function(filter) {
             }
         }).exec();
 }
+/*
 albumSchema.statics.getYear = async function(year) {
-    console.log(new Date(year));
+    console.log(new Date(String(year) + '12-31'));
     return await Album.find({
         releaseDate: {
             $lte: new Date(String(year) + '-12-31'),
             $gte: new Date(String(year) + '-1-1')
 
+        }
+    }).populate('artist');
+}
+*/
+albumSchema.statics.getYear = async function(year) {
+    const newyear = String(year);
+    return await Album.find({
+        releaseDate: {
+            $eq: year
         }
     }).populate('artist');
 }
@@ -93,9 +103,10 @@ albumSchema.statics.addAlbum = async function(request,date, isWeeklyAlbum, user)
         popularity: request.popularity,
         oldPopularity: request.popularity,
         user: user,
-        releaseDate: new Date(request.release_date),
+        releaseDate: new Date(request.release_date).getUTCFullYear(),
         date: date
     }
+    console.log(data);
     const newAlbum = new Album(data);
     await newAlbum.save();
     return request;

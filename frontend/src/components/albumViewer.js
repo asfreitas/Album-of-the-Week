@@ -22,11 +22,10 @@ class AlbumViewer extends React.Component {
         const albums = 
         this.props.isWeeklyAlbum ? 'getWeeklyAlbum' : '' + this.props.match.params.albumId;
         const url = API_URL + '/backend/album/' + albums;
-        console.log(url);
         let album = await getData(url);
-        console.log(album);
-        this.setState({album:album});
-        this.setState({loaded: true});
+
+        this.setState({ album: album });
+        this.setState({ loaded: true });
     }
     render() {
         return(

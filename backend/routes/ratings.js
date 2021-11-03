@@ -6,12 +6,21 @@ const Rating = require('../models/rating.model');
 
 router.route('/addRating').post(function(req, res) {
     const data = req.body;
-    console.log(req.body);
+
+    if (data.username === 'guest') {
+        return;
+    }
+    
     Rating.addRating(data['username'],data['album_id'], data['rating']);
 });
 
 router.route('/updateRating').put(function(req,res) {
     const data = req.body;
+
+    if (data.username === 'guest') {
+        return;
+    }
+    
     Rating.updateRating(data['rating'], data['_id']);
 });
 

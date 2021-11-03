@@ -2,6 +2,8 @@ const fetch = require('./fetch');
 const Artist = require('../../models/artist.model');
 const Track = require('../../models/track.model');
 const Album = require('../../models/album.model');
+
+
 function parseTracks(tracklist) {
     let tracksArray = [];
     for(let x = 0; x < tracklist.items.length; x++) {
@@ -47,7 +49,6 @@ async function createNewTracks(trackList) {
         let myTrack = await track.save()
         let track_id = myTrack._id;
         trackIds.push(track_id);
-        //console.log(x);
     }
     return trackIds;
 }

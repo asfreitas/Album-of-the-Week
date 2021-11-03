@@ -6,8 +6,20 @@ import Col from 'react-bootstrap/Col';
 import { instanceOf } from 'prop-types';
 import { Cookies, withCookies } from 'react-cookie';
 import { getData } from '../../helpers/fetch';
+import Alert from 'react-bootstrap/Alert';
 
+import '../../styles/header.css';
 const API_URL = process.env.REACT_APP_API_URL;
+
+
+const WrongLogin = () =>  { 
+
+      return (
+        <Alert variant="danger">
+          You have entered an invalid username or password
+        </Alert>
+      );
+  };
 
 class Login extends React.Component {
     static propTypes = {
@@ -19,7 +31,8 @@ class Login extends React.Component {
 
         this.state = {
             username: undefined,
-            password: undefined
+            password: undefined,
+            wrongLogin: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,8 +48,16 @@ class Login extends React.Component {
         }
         const username = await getData(url, headers);
         const { cookies } = this.props;
-        cookies.set('user', username, {path:'/'});
-        cookies.set('loggedin', true, {path:'/'});
+        if(username) {
+            cookies.set('user', username, {path:'/'});
+            cookies.set('loggedin', true, {path:'/'});
+            this.setState({wrongLogin: false})
+
+        }
+        else {
+            this.setState({wrongLogin: true})
+        }
+
     }
     handleChange(event) {
         const target = event.target;
@@ -50,7 +71,7 @@ class Login extends React.Component {
 
     render () {
         return (
-            <Form inline onSubmit={this.handleSubmit} onChange={this.handleChange}>
+            <Form onSubmit={this.handleSubmit} onChange={this.handleChange}>
                 <Row>
                     <Col>
                         <Form.Control size='leg'
@@ -74,7 +95,11 @@ class Login extends React.Component {
                         </Button>
                     </Col>
                 </Row>
+                <Row>
+                    {this.state.wrongLogin && <WrongLogin wrongLogin={true}/>}
+                </Row>
             </Form>
+
         )
     }
 }

@@ -6,7 +6,7 @@ import CardGroup from 'react-bootstrap/CardGroup';
 import { generateAlbum, getAlbums} from '../helpers/searchHelper'
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import '../styles/albumgrid.css';
+
 import '../components/albums/styles/album.css';
 import '../styles/search.css';
 
@@ -20,8 +20,6 @@ class Search extends React.Component {
     constructor(props) {
         super(props);
         // instantiate cookies
-        const { cookies } = this.props;
-        console.log(cookies);
         this.state = {
             searchQuery: '',
             albums: undefined,
@@ -60,13 +58,13 @@ class Search extends React.Component {
         )
     }
 
-    render () {
+    render () { 
         let albums = this.state.albums && this.state.albums.map(currentAlbum => (
             <SelectableAlbum album={currentAlbum} addAlbum={true} />));
         return (
             <section className='searchMain'>
                     {this.renderForm()}
-                    <CardGroup className='AlbumGrid'>
+                    <CardGroup className='AlbumGrid justify-content-start'>
                         {albums}
                     </CardGroup>
             </section>

@@ -9,16 +9,15 @@ const OtherRatings = (props) => {
         <React.Fragment key={rating._id}>
             <h6>{rating.user.username}</h6>
             <StarRating
-            allowEditing={false}
-            value={rating.rating}
-            size={'lg'}
+                allowEditing={false}
+                value={rating.rating}
+                size={'lg'}
             />
          </React.Fragment>
     );
     return (
         otherRatings
    );
-
 }
 
 export default function Ratings(props) {
@@ -30,24 +29,25 @@ export default function Ratings(props) {
 
     const name = cookies.user.username;
     const ratings = props.ratings;
-    const myRating = ratings.filter(rating => rating.user.username === name);
-    const otherRatings = ratings.filter(rating => rating.user.username !== name);
+    let myRating = null;
+    console.log(props.ratings);
+    myRating = ratings.filter(rating => rating.user && rating.user.username === name );
+    console.log(myRating);
+    
+    const otherRatings = ratings.filter(rating => rating.user != null && rating.user.username !== name);
     const rating = myRating.length === 0 ? 0 : myRating[0].rating;
 
-    let currentTime = Date.now();
-    let weekOf = new Date(props.weekOf);
-    weekOf.setHours(weekOf.getHours() + weekOf.getTimezoneOffset()/60);
         return (
         <>
             <StarRating
-            key={rating._id}
-            onClick={props.updateStars}
-            allowEditing={true}
-            value={rating}
-            size={'2x'}
+                key={rating._id}
+                onClick={props.updateStars}
+                allowEditing={true}
+                value={rating}
+                size={'2x'}
             />
-            {Number(currentTime) > Number(weekOf) &&
-            <OtherRatings ratings={otherRatings}/>}
+            
+            <OtherRatings ratings={otherRatings}/>
          </>
     )
 }

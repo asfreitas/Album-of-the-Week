@@ -15,7 +15,6 @@ const token_payload = {
 
 class TokenGenerator {
     constructor() {
-        console.log("making a new token generator");
         this.expireTime = null;
         this.token = null;
         this.generateNewToken();
@@ -42,7 +41,6 @@ class TokenGenerator {
     }
 
     async generateNewToken() {
-        console.log("Spotify client:" + process.env.SPOTIFY_CLIENT)
         let response;
         try {
             response = await fetch('https://accounts.spotify.com/api/token', token_payload );  
@@ -52,16 +50,10 @@ class TokenGenerator {
         }
         let newToken = await response.json();
 
-        console.log("New token: " + newToken);
-        console.log("Generating new Token");
-        for(const property in newToken) {
-            console.log(`${property}: ${newToken[property]}`);
-        }
         let newExpiration = new Date();
         newExpiration = newExpiration.setSeconds(newExpiration.getSeconds() + newToken.expires_in);
         this.expireTime = newExpiration;
         this.token = newToken.access_token;
-        console.log(this.token);
     }
 
 }

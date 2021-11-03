@@ -27,6 +27,13 @@ app.use('/backend/album', albumsRouter);
 app.use('/backend/users', usersRouter);
 app.use('/backend/addNew', searchRouter);
 app.use('/backend/ratings', ratingsRouter);
+
+
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+app.get('/*', function (req,res) {
+    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+})
 //app.use(express.static(path.join(__dirname, "build")));
 mongoose.set('useCreateIndex', true);
 const mongo_uri = process.env.MONGO_URI;
@@ -37,7 +44,8 @@ connection.once('open', () => {
     console.log("MongoDB databases connection established");
 });
 
-console.log(path.join(__dirname,'build'));
+
+console.log(path.join(__dirname,'../frontend/build'));
 /*
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));

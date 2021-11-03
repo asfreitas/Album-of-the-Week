@@ -17,25 +17,26 @@ async function getWeeklyAlbum(req, res, next) {
         const filter = {isAlbumOfTheWeek: true};
         const album = await Album.getAlbum(filter);
         res.locals.album = album;
-        res.locals.year = album.releaseDate.getFullYear();
+        res.locals.year = album.releaseDate;
     }
     next();
 }
 
 
 router.route('/getWeeklyAlbum').get(getWeeklyAlbum, async function(req,res) {
-    console.log(res.locals.album);
     res.json(res.locals.album);
 
 });
-router.route('/test').get(function(req,res) {
-    res.json('test')
-})
+
 router.route('/likeTrack').post(async function(req, res) {
     // get user id tied to like
-    console.log(req.body);
+    let username = req.body.user;
+    // check if the user is allowed to like tracks
+    if (username === 'guest') {
+        return;
+    }
     const user = await User.findOne({
-        username: req.body.user
+        username: username
     });
     // add user to likes array
     const trackId = req.body['trackId'];
@@ -47,31 +48,12 @@ router.route('/likeTrack').post(async function(req, res) {
     
 });
 
-router.route('/dislikeTrack').post(async function(req, res) {
-    // get user id tied to like
-    const user = await User.findOne({
-        username: req.body.user
-    });
-    // add user to likes array
-    const trackId = req.body['trackId'];
-    const filter = {track_id: trackId};
-    const update = {'$push': { dislikes : user._id}}
-    const track = await Track.findOne(filter);
-    track.dislikes.addToSet(user._id);
-    track.save();
-    
-});
-
 router.route('/').get((req, res) => {
     // don't display tracks when displaying all albums
-    console.log('here');
     Album.find({}, {tracks:0})
     .populate('artist')
     .then(albums => {
-
-    
-        console.log(albums)
-        res.json(albums)
+        res.json(albums);
     })
     .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -79,9 +61,12 @@ router.route('/').get((req, res) => {
 
 router.route('/getYears').get(async function(req,res) {
     let dates = await Album.find({}, 'releaseDate');
-    dates = dates.map(date => date.releaseDate.getFullYear());
+    console.log("Here are the dates" + dates)
+    dates = dates.map(date => date.releaseDate);
+    console.log("Line 66" + dates);
     let set = new Set(dates);
     dates = Array.from(set);
+    console.log("Sending " + dates)
     res.send(dates);
 })
 
@@ -92,10 +77,14 @@ router.route('/year').get(getWeeklyAlbum, async function(req,res) {
 });
 
 router.route('/add').post(async function(req, res, next){
-    //console.log(req.body);
+
+    if(!req.body.currentuser || req.body.currentuser.username === 'guest') {
+        return;
+    }
     const token = tokenGenerator.getToken();
     let album = helpers.setupAlbum(req.body);
     let album_id = album['album_id'];
+
 
     const headers =  {
         'Authorization': 'Bearer ' + token
@@ -103,6 +92,7 @@ router.route('/add').post(async function(req, res, next){
     const url = 'https://api.spotify.com/v1/albums/' + album_id;
     const request = await fetch.getData(url, headers, undefined, 'GET');
     const artist = await helpers.getArtistInfo(token, req.body.artist_id.id);
+    console.log(request);
 
     // create or update artist name 
 
@@ -110,7 +100,6 @@ router.route('/add').post(async function(req, res, next){
     if(isWeeklyAlbum) {
         const filter = {isAlbumOfTheWeek: true};
         const oldWeeklyAlbum = await Album.getAlbum(filter);
-        console.log('the old weekly album is....\n\n' + oldWeeklyAlbum);
         if(oldWeeklyAlbum)
         {
             oldWeeklyAlbum.isAlbumOfTheWeek = false;
@@ -122,11 +111,10 @@ router.route('/add').post(async function(req, res, next){
      }
     const user = await User.findOne({
         username: album['user']
-    }); 
+    });
     await Album.addAlbum(request,album.date, isWeeklyAlbum, user._id);
     await Track.addTracks(request);
     await Artist.addArtist(artist, album_id)
-    console.log('finished adding');
     res.sendStatus(501);
 });
 router.route('/:albumId').get(async function(req, res) {

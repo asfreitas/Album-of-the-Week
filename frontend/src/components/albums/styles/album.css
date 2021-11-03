@@ -17,29 +17,41 @@ img {
     background-color:#343a40!important;
 }
 .albumInfo {
-    text-align:right;
+ 
+   text-align:right;
 }
+
+/* This removes the underlines on the selectable
+albums */
+a {
+    text-decoration:none !important;
+}
+.sel-album:hover {
+    background-color:#353a40 !important;
+}
+
 .artistInfo {
     text-align:center;
     text-overflow:ellipsis !important;
     width: 40vh;
     overflow:hidden;
     white-space:nowrap;
-    z-index:10;
 }
 .artistInfo.selectable:hover {
     overflow:visible;
     text-overflow:unset;
     height:auto;
     white-space:normal;
+    text-decoration:none !important;
 }
 .card-img-top.selectable {
-    max-width: 50vh;
-    max-height: 50vh;
+    max-width: 45vh;
+    max-height: 45vh;
 }
 
 .card {
     height:max-content;
+    margin-left:1rem;
  /*   flex-direction:row !important */
 ;
 }
@@ -60,23 +72,18 @@ img {
 .selectable {
     margin: 10px auto !important;
     height:max-content !important;
-    cursor:pointer;
-    text-decoration:none !important;
-
-}
-.stretched-link {
-    z-index:-1;
 }
 
 .toasts {
-    background-color:blue;
     color: blue;
     position:absolute;
     margin-left:10em;
 }
+
 .toasts .bodys{
     background-color: white;
 }
+
 .thumbs-up {
     margin: 10px;
     color:blue;

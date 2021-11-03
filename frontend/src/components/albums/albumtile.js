@@ -19,6 +19,7 @@ const Body = (props) => {
     if(!props.showBody) {
         return null;
     }
+    
     return (
         <Container fluid>
                 <Row className='justify-content-sm-center' xs={1} sm={1} md={1} lg={2}>
@@ -60,7 +61,7 @@ function setStarsData(name, album, starsCount) {
         album_id: album.album_id,
         rating: starsCount
     }
-    const myRating = album.ratings.filter(rating => rating.user.username === name);
+    const myRating = album.ratings.filter(rating => rating.user && rating.user.username === name);
     if(myRating.length > 0) {
         data['_id'] = myRating[0]._id
     }
@@ -77,6 +78,7 @@ class Album extends React.Component {
             album: props.album,
             stars: props.defaultStars || 0
         }
+
         this.updateLike = this.updateLike.bind(this);
         this.updateStars = this.updateStars.bind(this);
     }
@@ -94,6 +96,10 @@ class Album extends React.Component {
         let likes = newAlbum.tracks[index].likes;
         const { cookies } = this.props;
         const name = cookies.get('user').username;
+        console.log(likes);
+        if(likes.filter(e => e.username === name).length > 0) {
+            return;
+        }
         let newName = {'username': name}; // need to change this to update for logged in user
         likes.push(newName);
         this.setState({album: newAlbum});
@@ -102,7 +108,7 @@ class Album extends React.Component {
 
     render() {
             return(
-                <Card bg='dark' text='light' border='dark' className={`album unClickable mx-auto`}>
+                <Card bg='dark' text='light' border='light' className={`album unClickable mx-auto`}>
                     <Header 
                         album={this.state.album}
                         albumClass='unClickable'

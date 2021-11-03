@@ -64,7 +64,9 @@ class CurrentYear extends React.Component {
         this.state = {
             years : undefined,
             year: undefined,
-            showNewYear: false
+            showNewYear: false,
+            finished: false
+
         }
         this.setNewYear = this.setNewYear.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -72,15 +74,17 @@ class CurrentYear extends React.Component {
     async componentDidMount() {
         const year_URL = API_URL + '/backend/album/getYears';
         const date_URL = API_URL + '/backend/album/getWeeklyAlbum';
+        console.log(year_URL);
         let years = await getData(year_URL);
+        years = years.map(year => Number(year));
         years.sort();
         const date = await getData(date_URL);
-        const releaseDate = new Date(date.releaseDate).getFullYear();
-        this.setState({years:years})
-        this.setState({year:releaseDate})
+        this.setState({ years: years })
+        this.setState({ year: date.releaseDate })
+        this.setState({ finished: true })
     }
     setNewYear() {
-        this.setState({showNewYear:true})
+        this.setState({ showNewYear: true })
     }
     handleChange(event) {
         this.setState({
@@ -89,34 +93,33 @@ class CurrentYear extends React.Component {
 
     }
     render() {
-        console.log(this.state.year);
         return(
-            <>
-            <div className='getNewYear'>
-                <Button
-                onClick={this.setNewYear}>
-                    Get a new year
-                </Button>
-                <GetNewYear showYear={this.state.showNewYear} dates={this.state.years}/>
-            </div>
-                <Form className='dateSelect'>
-                    <Form.Control
-                    as='select'
-                    name='years'
-                    onChange={this.handleChange}
-                    value={this.state.year}>
-                        
-                        <Years
-                         year={this.state.year} 
-                         years={this.state.years}
-                         />
-                    </Form.Control>
-                </Form>
-                <AlbumList 
-                currentYear={true} 
-                year={this.state.year} 
-                />
-            </>
+         this.state.finished ?    <>
+         <div className='getNewYear'>
+             <Button
+             onClick={this.setNewYear}>
+                 Get a new year
+             </Button>
+             <GetNewYear showYear={this.state.showNewYear} dates={this.state.years}/>
+         </div>
+             <Form className='dateSelect'>
+                 <Form.Control
+                 as='select'
+                 name='years'
+                 onChange={this.handleChange}
+                 value={this.state.year}>
+                     
+                     <Years
+                      year={this.state.year} 
+                      years={this.state.years}
+                      />
+                 </Form.Control>
+             </Form>
+             <AlbumList 
+             currentYear={true} 
+             year={this.state.year} 
+             />
+         </> : null
         )
     }
 }

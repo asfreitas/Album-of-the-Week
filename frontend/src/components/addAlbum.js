@@ -1,6 +1,5 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
-//import UnclickableAlbum from './albums/UnclickableAlbum';
 import Album from './albums/albumtile';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -32,13 +31,14 @@ const PickDate = (props) => {
         />
     )
 }
+
 class AddAlbum extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
     };
     constructor(props) {
         super(props);
-
+        console.log(props);
         this.state = {
             album: props.location.state.album,
             name: undefined,
@@ -86,9 +86,9 @@ class AddAlbum extends React.Component {
         newAlbum['user'] = user;
         newAlbum['isAlbumOfTheWeek'] = this.state.AOTW;
         newAlbum['date'] = this.state.date;
-        const query = API_URL + '/backend/album/add';
-        console.log(this.state.album);
         const { cookies } = this.props;
+        newAlbum['currentuser'] = cookies.get('user');
+        const query = API_URL + '/backend/album/add';
         const token = cookies.get('token');
         await insertAlbum(query, token, newAlbum);
         console.log("I'm here");

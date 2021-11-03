@@ -3,8 +3,12 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
 
 import '../styles/thumbs.css'
+
+const API_URL = process.env.REACT_APP_API_URL;
+
 
 export function ThumbsUp(props) {
     let className = 'thumb up';
@@ -14,8 +18,9 @@ export function ThumbsUp(props) {
     }
     return (
         <FontAwesomeIcon
-        className={className}
-        icon={faThumbsUp}/>
+            className={className}
+            icon={faThumbsUp}
+        />
     );
 }
 
@@ -41,23 +46,26 @@ export function Likes(props) {
         });
     }
     names.toString();
-    return ( props.likes.length > 0 && 
-            <Toast  className='toasts' show={props.showLikes}  autohide={true}>
-                <Toast.Body  className='bodys'>
-                    {names} liked this song
-                </Toast.Body>
-            </Toast>
+    return ( props.likes.length > 0 &&
+                <Toast  className='toasts' show={props.showLikes}  autohide={true}>
+                    <Toast.Body  className='bodys'>
+                        {names} liked this song
+                    </Toast.Body>
+                </Toast>
     )
 }
 
 
 export function likeOnClick(username, songId, index, updateLike) {
-    console.log(index);
+    if(!username || username === 'guest') {
+        return;
+    }
     let headerDict = {
         'access_token': undefined,
         'content': 'form'
     };
-    postData('https://guardians-305413.wl.r.appspot.com/backend/album/likeTrack', headerDict, {trackId: songId, user: username});
+    const API = API_URL + '/backend/album/likeTrack';
+    postData(API, headerDict, {trackId: songId, user: username});
 
     updateLike(index);
 

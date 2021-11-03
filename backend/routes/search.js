@@ -28,7 +28,6 @@ router.route('/').get(async function(req, res, next){
 
     try {
         let albums = await searchSpotify(token, query);
-        console.log(albums);
         const fullAlbum = [albums.albums.items];
         res.send(fullAlbum);
     }

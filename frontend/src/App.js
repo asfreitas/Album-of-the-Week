@@ -20,8 +20,8 @@ class App extends Component {
             <div className='root'>
             
               <Header/>
-              <main>
-                  <Switch className='body'>
+              <main className='pb-3 pt-5'>
+                <Switch className='body'>
                     <Route exact path='/addalbum' component={AddAlbum}/>
                     <Route exact path='/albums/weekly' component={WeeklyAlbum} />
                     <Route exact path='/albums/:albumId' component={AlbumViewer} />
@@ -29,7 +29,7 @@ class App extends Component {
                     <Route exact path='/' component={List} /> 
                     <Route exact path='/login' component={Login}/>
                     <Route exact path='/year' component={CurrentYear}/>
-                  </Switch>
+                </Switch>
               </main>
               </div>
         );

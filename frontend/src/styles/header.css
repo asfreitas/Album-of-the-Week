@@ -1,0 +1,28 @@
+.dropdown-menu.show {
+    background-color:#343a40;
+    border-color:#343a40;
+}
+.dropdown-menu.show:hover {
+    background-color:#343a40;
+    border-color:#343a40;
+}
+
+
+.alert {
+    position:inherit !important;
+}
+#logout-button.dropdown-item {
+    color:rgba(255, 255, 255, 0.53);
+}
+
+#logout-button:hover {
+    background-color:#636567;
+}
+
+.login {
+
+}
+.navbar {
+    position:relative !important;
+    padding-left:.5rem;
+}
