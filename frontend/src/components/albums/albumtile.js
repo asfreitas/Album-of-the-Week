@@ -83,12 +83,12 @@ class Album extends React.Component {
         this.updateStars = this.updateStars.bind(this);
     }
 
-    async updateStars(starsCount) {
+    updateStars(starsCount) {
         const { cookies } = this.props;
         const name = cookies.get('user').username;
         const data = setStarsData(name, this.props.album, starsCount);
         const url = API_URL + '/backend/ratings/addRating';
-        await postData(url, undefined, data);
+        postData(url, undefined, data);
     }
 
     updateLike(index) {

@@ -3,7 +3,6 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import Toast from 'react-bootstrap/Toast';
-import ToastContainer from 'react-bootstrap/ToastContainer';
 
 import '../styles/thumbs.css'
 
@@ -65,7 +64,7 @@ export function likeOnClick(username, songId, index, updateLike) {
         'content': 'form'
     };
     const API = API_URL + '/backend/album/likeTrack';
-    postData(API, headerDict, {trackId: songId, user: username});
+    postData(API, headerDict, { trackId: songId, user: username });
 
     updateLike(index);
 

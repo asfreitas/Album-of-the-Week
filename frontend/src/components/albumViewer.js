@@ -30,7 +30,7 @@ class AlbumViewer extends React.Component {
     render() {
         return(
             <div className='albumView'>
-                {this.state.loaded ? <Album showBody={true} showStars={true} album={this.state.album}/> : 'loading'}
+                {this.state.loaded ? <Album showBody={true} showStars={true} album={this.state.album}/> : null}
             </div>
         )
     }

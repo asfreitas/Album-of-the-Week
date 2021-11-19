@@ -12,5 +12,4 @@ const UnclickableAlbum = (props) => {
 
 }
 
-
 export default UnclickableAlbum;

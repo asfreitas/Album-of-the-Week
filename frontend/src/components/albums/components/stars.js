@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-import './stars.css';
+import './styles/stars.css';
 
 export default function StarRating(props) {
     const classNames = Array(props.starsCount || 5).fill('star');
