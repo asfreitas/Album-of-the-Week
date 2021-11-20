@@ -7,7 +7,6 @@ import { insertAlbum } from '../helpers/albumHelper';
 import { instanceOf } from 'prop-types';
 import { Cookies, withCookies } from 'react-cookie';
 import { getData } from '../helpers/fetch';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './albums/styles/album.css';
 import '../styles/addalbum.css';
@@ -19,17 +18,6 @@ const Users = (props) => {
     return users.map((user) =>
         <option key={user._id} onChange={props.handleChange} value={user.username}>{user.username}</option>
     );
-}
-
-const PickDate = (props) => {
-    return (
-        <DatePicker
-            selected={props.selected}
-            onChange={props.handleDateChange}
-            showTimeSelect
-            dateFormat="Pp"
-        />
-    )
 }
 
 class AddAlbum extends React.Component {
@@ -54,9 +42,11 @@ class AddAlbum extends React.Component {
         this.handleDate = this.handleDate.bind(this);
     }
     async componentDidMount() {
+        document.title = "Add a New Album";
         const url = API_URL + '/backend/users/getUsernames';
         const users = await getData(url);
         this.setState({users: users, loaded: true, name: users[0].username})
+        document.title = "Add " + this.state.album.title + " to the List";
 
     }
 
@@ -131,7 +121,6 @@ class AddAlbum extends React.Component {
                     <Album showBody={false} showStars={false} album={this.state.album}/>
                     <div className='mainForm'>
                         {this.renderForm()}
-                        <PickDate selected={this.state.date} handleDateChange={this.handleDate}/>
 
                     </div>                
                 </>

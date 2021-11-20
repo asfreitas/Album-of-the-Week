@@ -45,6 +45,9 @@ class Search extends React.Component {
         this.forceUpdate();
 
     };
+    componentDidMount() {
+        document.title = "Find a New Album";
+    }
     renderForm() {
         return (
             <Form className='searchBar' onSubmit={this.handleSubmit}>

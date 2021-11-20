@@ -82,6 +82,7 @@ class CurrentYear extends React.Component {
         this.setState({ years: years })
         this.setState({ year: date.releaseDate })
         this.setState({ finished: true })
+        document.title = "Albums of the Week - " + this.state.year;
     }
     setNewYear() {
         this.setState({ showNewYear: true })
