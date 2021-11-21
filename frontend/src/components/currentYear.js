@@ -7,6 +7,8 @@ import '../styles/currentYear.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+
+const TITLE = "Albums - ";
 const Years = (props) => {
     let years = null;
     if(props.years === undefined)
@@ -60,7 +62,7 @@ function getRandomYear(oldYears) {
 class CurrentYear extends React.Component {
     constructor(props) {
         super(props);
-
+        
         this.state = {
             years : undefined,
             year: undefined,
@@ -72,9 +74,9 @@ class CurrentYear extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
     async componentDidMount() {
+        
         const year_URL = API_URL + '/backend/album/getYears';
         const date_URL = API_URL + '/backend/album/getWeeklyAlbum';
-        console.log(year_URL);
         let years = await getData(year_URL);
         years = years.map(year => Number(year));
         years.sort();
@@ -82,7 +84,8 @@ class CurrentYear extends React.Component {
         this.setState({ years: years })
         this.setState({ year: date.releaseDate })
         this.setState({ finished: true })
-        document.title = "Albums of the Week - " + this.state.year;
+        document.title = TITLE + this.state.year;
+
     }
     setNewYear() {
         this.setState({ showNewYear: true })
@@ -91,9 +94,11 @@ class CurrentYear extends React.Component {
         this.setState({
             year: event.target.value
         })
+        document.title = TITLE + event.target.value;
 
     }
     render() {
+
         return(
          this.state.finished ?    <>
          <div className='getNewYear'>

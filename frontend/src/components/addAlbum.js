@@ -56,11 +56,11 @@ class AddAlbum extends React.Component {
         });
         
     }
+
     handleDate(date) {
         this.setState({
             date: date
         })
-        console.log(this.state.date);
     }
     handleCheck(event) {
         this.setState({
@@ -81,7 +81,6 @@ class AddAlbum extends React.Component {
         const query = API_URL + '/backend/album/add';
         const token = cookies.get('token');
         await insertAlbum(query, token, newAlbum);
-        console.log("I'm here");
         this.setState({submitted: true})
     }
     renderForm() {

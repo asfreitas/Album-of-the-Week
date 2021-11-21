@@ -23,6 +23,7 @@ class AlbumViewer extends React.Component {
          ? 'getWeeklyAlbum' : '' + this.props.match.params.albumId;
         const url = API_URL + '/backend/album/' + albums;
         let album = await getData(url);
+        console.log(album);
 
         this.setState({ album: album });
         this.setState({ loaded: true });

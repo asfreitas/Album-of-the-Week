@@ -33,6 +33,7 @@ class AlbumList extends React.Component {
     }
     componentDidMount() {
         this.updateAlbums();
+        document.title = "Albums";
     }
     componentDidUpdate(prevProps) {
         if(this.props.year !== prevProps.year)

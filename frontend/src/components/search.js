@@ -27,6 +27,7 @@ class Search extends React.Component {
         // function bindings
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        document.title = "Find a New Album";
 
     }
  
@@ -46,7 +47,6 @@ class Search extends React.Component {
 
     };
     componentDidMount() {
-        document.title = "Find a New Album";
     }
     renderForm() {
         return (

@@ -15,6 +15,7 @@ const Track = (props) => {
     if(song.likes.length > 0) {likedSong = true;}
     let username = null;
     if (cookies.user) {username = cookies.user.username;}
+    
     return (
         <li key={song['track_id']}>
             <span className='track'>

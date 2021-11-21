@@ -18,6 +18,11 @@ artistSchema.virtual('album_ids', {
     foreignField: 'album_id'
 });
 
+class Artist {
+    static addArtist() {
+        
+    }
+}
 artistSchema.statics.addArtist = async function(artist, album_id) {
     const data = {
         genres: artist.genres,
@@ -36,6 +41,6 @@ artistSchema.statics.addArtist = async function(artist, album_id) {
 }
 
 
-const Artist = mongoose.model('Artist', artistSchema);
+const model = mongoose.model('Artist', artistSchema);
 
-module.exports = Artist;
+module.exports = model;

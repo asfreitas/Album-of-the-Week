@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const fetch = require('../routes/helpers/fetch');
-const helpers = require('../routes/helpers/albumsHelper');
 
 const albumSchema = new mongoose.Schema({
     album_id: String,
@@ -40,56 +38,63 @@ albumSchema.virtual('tracks', {
     ref: 'Track',
     localField: 'tracks_array',
     foreignField: 'track_id',
-
 });
 
-albumSchema.statics.getAlbum = async function(filter) {
-    return this.findOne(filter)
-    .populate({
-        path:'tracks',
-        populate: {
-            model: 'User',
-            path: 'likes dislikes',
-            select: 'username',
-        }
-    })
-        .populate({
-            model: 'User',
-            path: 'user',
-            select: 'username'
-        })
-        .populate('artist')
-        .populate({
-            model: 'Rating',
-            path: 'ratings',
-            select: {'album':0},
+class Album {
+    
+    static populateAlbum(album) {
+       return album.populate({
+            path:'tracks',
             populate: {
-                path:'user',
                 model: 'User',
-                select: {'username':1, '_id':1}
+                path: 'likes',
+                select: 'username',
             }
-        }).exec();
-}
-/*
-albumSchema.statics.getYear = async function(year) {
-    console.log(new Date(String(year) + '12-31'));
-    return await Album.find({
-        releaseDate: {
-            $lte: new Date(String(year) + '-12-31'),
-            $gte: new Date(String(year) + '-1-1')
+            })
+            .populate({
+                model: 'User',
+                path: 'user',
+                select: 'username'
+            })
+            .populate('artist')
+            .populate({
+                model: 'Rating',
+                path: 'ratings',
+                select: { 'album' : 0 },
+                populate: {
+                    path:'user',
+                    model: 'User',
+                    select: { 'username': 1, '_id': 1 }
+                }
+            }).exec();
+    }
 
-        }
-    }).populate('artist');
+    static findById(id) {
+        let album = this.findOne(id);
+        return this.populateAlbum(album);
+    }
+
+    static getByYear(year) {
+        const stringifiedYear = String(year);
+        let album = this.find({
+            releaseDate: { $eq: stringifiedYear}
+        });
+        return this.populateAlbum(album);
+    }
+
+    static findByIsAlbumOfTheWeek() {
+        let album = this.findOne({isAlbumOfTheWeek: true});
+        album = this.populateAlbum(album);
+        return album;
+    }
+    
+    getYear() {
+        return `${this.year}`;
+    }
 }
-*/
-albumSchema.statics.getYear = async function(year) {
-    const newyear = String(year);
-    return await Album.find({
-        releaseDate: {
-            $eq: year
-        }
-    }).populate('artist');
-}
+
+/*
+
 albumSchema.statics.addAlbum = async function(request,date, isWeeklyAlbum, user) {
 
     const newTracks = request.tracks.items.map(track => track.id);
@@ -112,5 +117,8 @@ albumSchema.statics.addAlbum = async function(request,date, isWeeklyAlbum, user)
     return request;
 }
 const Album = mongoose.model('Album', albumSchema);
+*/
 
-module.exports = Album;
+albumSchema.loadClass(Album);
+const AlbumModel = mongoose.model('Album', albumSchema);
+module.exports = AlbumModel;
