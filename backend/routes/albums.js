@@ -85,7 +85,6 @@ router.route('/add').post(async function(req, res, next){
     const url = 'https://api.spotify.com/v1/albums/' + album_id;
     const request = await fetch.getData(url, headers, undefined, 'GET');
     const artist = await helpers.getArtistInfo(token, req.body.artist_id.id);
-    console.log(request);
 
     // create or update artist name 
 
@@ -107,7 +106,7 @@ router.route('/add').post(async function(req, res, next){
     });
     await Album.addAlbum(request,album.date, isWeeklyAlbum, user._id);
     await Track.addTracks(request);
-    await Artist.addArtist(artist, album_id)
+    await Artist.addArtist(artist, album_id);
     res.sendStatus(501);
 });
 
@@ -116,7 +115,6 @@ router.route('/:albumId').get(async function(req, res) {
     const filter = {album_id: albumId};
     
     const album = await Album.findById(filter);
-    console.log(album.getTracks());
     res.json(album);
 });
 

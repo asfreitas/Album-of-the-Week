@@ -8,6 +8,5 @@ export default function AlbumInfo(props){
             Chosen By: {name}<p/>
             Release Year: {fullDate}
         </h4>
-
     );
 }

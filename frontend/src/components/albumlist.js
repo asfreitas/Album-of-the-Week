@@ -28,6 +28,7 @@ class AlbumList extends React.Component {
             }
         }
         var albums = await getData(url);
+
         this.setState({ album:albums, loaded: true });
     }
     componentDidMount() {

@@ -1,4 +1,8 @@
 const mongoose = require('mongoose');
+const Track = require('./track.model');
+const User = require('./user.model');
+const Artist = require('./artist.model');
+const Rating = require('./rating.model');
 
 const albumSchema = new mongoose.Schema({
     album_id: String,
@@ -13,7 +17,6 @@ const albumSchema = new mongoose.Schema({
     },
     cover: String,
     releaseDate: String,
-    date:Date,
     isAlbumOfTheWeek: Boolean,
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -24,9 +27,10 @@ const albumSchema = new mongoose.Schema({
         ref: 'Rating'
     },
     popularity: Number,
-    oldPopularity: Number
-}, {toJSON: {virtuals: true},
-toObject: {virtuals:true}});
+    oldPopularity: Number,
+    genres: [String]
+}, { toJSON: {virtuals: true},
+toObject: { virtuals: true }});
 
 albumSchema.virtual('artist', {
     ref: 'Artist',
@@ -42,83 +46,68 @@ albumSchema.virtual('tracks', {
 });
 
 class Album {
-    
-    static populateAlbum(album) {
-       return album.populate({
-            path:'tracks',
-            populate: {
-                model: 'User',
-                path: 'likes',
-                select: 'username',
-            }
-            })
-            .populate({
-                model: 'User',
-                path: 'user',
-                select: 'username'
-            })
-            .populate('artist')
-            .populate({
-                model: 'Rating',
-                path: 'ratings',
-                select: { 'album' : 0 },
-                populate: {
-                    path:'user',
-                    model: 'User',
-                    select: { 'username': 1, '_id': 1 }
-                }
-            }).exec();
+
+    async populateAlbum() {
+        let albumDoc = this.toObject();
+        
+        albumDoc.tracks = await (Track.find({ track_id : { $in : this.tracks_array }})
+            .populate( { model: 'User', path: 'likes', select: 'username' } ));
+        albumDoc.user = await (User.findById( { _id: this.user }, 'username'));
+        albumDoc.ratings = await (Rating.find( { _id : {$in : this.ratings }}))
+            .populate( { model: 'User', path: 'user', select: 'username' } );
+
+        const artist = await (Artist.find({artist_id: this.artist_id}));
+        albumDoc.artist = artist[0];
+        return albumDoc;
     }
 
-    static findById(id) {
-        let album = this.findOne(id);
-        return this.populateAlbum(album);
+    static async findById(id) {
+        const album = await this.findOne(id);
+        const albumDoc = album.populateAlbum();
+        return albumDoc;
     }
-    static findByYear(year) {
+
+    static async findByYear(year) {
         const stringifiedYear = JSON.stringify(year);
-        let album = this.find({
+
+        let albums = await this.find({
             releaseDate: { $eq: stringifiedYear}
-        });
-        return this.populateAlbum(album);
+        }).populate({model:'Artist', path:'artist'});
+
+        return albums;
     }
 
-    static findByIsAlbumOfTheWeek() {
-        let album = this.findOne({isAlbumOfTheWeek: true});
-        album = this.populateAlbum(album);
-        return album;
+    static async findByIsAlbumOfTheWeek() {
+        let album = await this.findOne({isAlbumOfTheWeek: true});
+        const albumDoc = album.populateAlbum();
+        return albumDoc;
     }
 
     static async getReleaseDates() {
         return await this.distinct('releaseDate');
     }
-}
 
-/*
-
-albumSchema.statics.addAlbum = async function(request,date, isWeeklyAlbum, user) {
-
-    const newTracks = request.tracks.items.map(track => track.id);
-    const data = {
-        album_id: request.id,
-        title: request.name,
-        artist_id: request.artists[0].id,
-        tracks_array: newTracks,
-        cover: request.images[0].url,
-        isAlbumOfTheWeek: isWeeklyAlbum,
-        popularity: request.popularity,
-        oldPopularity: request.popularity,
-        user: user,
-        releaseDate: new Date(request.release_date).getUTCFullYear(),
-        date: date
+    static async addAlbum(request,date, isWeeklyAlbum, user) {
+        const newTracks = request.tracks.items.map(track => track.id);
+        const data = {
+            album_id: request.id,
+            title: request.name,
+            artist_id: request.artists[0].id,
+            tracks_array: newTracks,
+            cover: request.images[0].url,
+            isAlbumOfTheWeek: isWeeklyAlbum,
+            popularity: request.popularity,
+            oldPopularity: request.popularity,
+            user: user,
+            releaseDate: new Date(request.release_date).getUTCFullYear(),
+            date: date
+        }
+        let newAlbum = await this.create(data);
+        return newAlbum;
     }
-    console.log(data);
-    const newAlbum = new Album(data);
-    await newAlbum.save();
-    return request;
 }
-const Album = mongoose.model('Album', albumSchema);
-*/
 
 albumSchema.loadClass(Album);
 const AlbumModel = mongoose.model('Album', albumSchema);
+
 module.exports = AlbumModel;

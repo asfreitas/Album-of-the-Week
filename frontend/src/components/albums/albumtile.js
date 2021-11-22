@@ -42,7 +42,6 @@ const Body = props => {
                         <Card.Body className='tracks'>
                             <TrackList 
                                 updateLike={props.updateLike}
-                                updateDislike={props.updateDislike}
                                 songs={props.songs}
                             />
                         </Card.Body>
@@ -70,11 +69,12 @@ class Album extends React.Component {
     };
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
             album: props.album,
             stars: props.defaultStars || 0
         }
-
+        console.log(this.state.album.title);
         this.updateLike = this.updateLike.bind(this);
         this.updateStars = this.updateStars.bind(this);
     }

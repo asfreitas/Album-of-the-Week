@@ -16,6 +16,7 @@ const ratingSchema = mongoose.Schema({
     }
 });
 
+
 ratingSchema.statics.addRating = async function(username, album, rating) {
     const albumName = await Album.findOne({album_id: album});
     const userName = await User.findOne({username: username});

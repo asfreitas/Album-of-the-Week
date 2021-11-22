@@ -25,9 +25,8 @@ class Artist {
             artist_id: artist.id,
             name: artist.name,
             albums: album_id
-    
         }
-        const newArtist = await this.findOneAndUpdate(artist_id, data, {
+        const newArtist = await this.findOneAndUpdate({ artist_id: this.artist_id}, data, {
             new: true,
             upsert: true
         });
