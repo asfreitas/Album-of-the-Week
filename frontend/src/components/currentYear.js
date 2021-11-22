@@ -74,16 +74,15 @@ class CurrentYear extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
     async componentDidMount() {
-        
         const year_URL = API_URL + '/backend/album/getYears';
         const date_URL = API_URL + '/backend/album/getWeeklyAlbum';
         let years = await getData(year_URL);
         years = years.map(year => Number(year));
         years.sort();
         const date = await getData(date_URL);
-        this.setState({ years: years })
-        this.setState({ year: date.releaseDate })
-        this.setState({ finished: true })
+
+        this.setState({ years: years, 
+            year: date.releaseDate, finished: true})
         document.title = TITLE + this.state.year;
 
     }

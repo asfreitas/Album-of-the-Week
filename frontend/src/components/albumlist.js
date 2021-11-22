@@ -13,7 +13,7 @@ class AlbumList extends React.Component {
         super(props);
         this.state = {
             album : null,
-            finished: false,
+            loaded: false,
             year: this.props.year
         }
         this.updateAlbums = this.updateAlbums.bind(this);
@@ -28,8 +28,7 @@ class AlbumList extends React.Component {
             }
         }
         var albums = await getData(url);
-        this.setState({album:albums});
-        this.setState({finished: true});
+        this.setState({ album:albums, loaded: true });
     }
     componentDidMount() {
         this.updateAlbums();
@@ -44,7 +43,7 @@ class AlbumList extends React.Component {
     }
 
     render() {
-        const finished = this.state.finished;
+        const loaded = this.state.loaded;
         let album = (
                 this.state.album && this.state.album.map((currentAlbum, index) =>
                  (
@@ -52,7 +51,7 @@ class AlbumList extends React.Component {
                 ))
             );
     return ( 
-            finished ? <CardGroup className='AlbumGrid align-content-start'>
+            loaded ? <CardGroup className='AlbumGrid align-content-start'>
                 {album}
             </CardGroup> : null
     );

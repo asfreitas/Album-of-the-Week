@@ -14,8 +14,7 @@ async function getWeeklyAlbum(req, res, next) {
         res.locals.year = Number(req.query.year);
     }
     else {
-        const filter = {isAlbumOfTheWeek: true};
-        const album = await Album.getAlbum(filter);
+        const album = await Album.findByIsAlbumOfTheWeek();
         res.locals.album = album;
         res.locals.year = album.releaseDate;
     }
@@ -60,19 +59,13 @@ router.route('/').get((req, res) => {
 
 
 router.route('/getYears').get(async function(req,res) {
-    let dates = await Album.find({}, 'releaseDate');
-    console.log("Here are the dates" + dates)
-    dates = dates.map(date => date.releaseDate);
-    console.log("Line 66" + dates);
-    let set = new Set(dates);
-    dates = Array.from(set);
-    console.log("Sending " + dates)
+    const dates = await Album.getReleaseDates();
     res.send(dates);
-})
+});
 
 router.route('/year').get(getWeeklyAlbum, async function(req,res) {
     const year = res.locals.year;
-    const album = await Album.getYear(year);
+    const album = await Album.findByYear(year);
     res.send(album);
 });
 
@@ -117,11 +110,13 @@ router.route('/add').post(async function(req, res, next){
     await Artist.addArtist(artist, album_id)
     res.sendStatus(501);
 });
+
 router.route('/:albumId').get(async function(req, res) {
     const albumId = req.params['albumId'];
     const filter = {album_id: albumId};
     
-    const album = await Album.getAlbum(filter);
+    const album = await Album.findById(filter);
+    console.log(album.getTracks());
     res.json(album);
 });
 

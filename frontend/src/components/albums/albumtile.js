@@ -15,11 +15,7 @@ import './styles/album.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const Body = (props) => {
-    if(!props.showBody) {
-        return null;
-    }
-    
+const Body = props => {
     return (
         <Container fluid>
                 <Row className='justify-content-sm-center' xs={1} sm={1} md={1} lg={2}>
@@ -96,7 +92,7 @@ class Album extends React.Component {
         let likes = newAlbum.tracks[index].likes;
         const { cookies } = this.props;
         const name = cookies.get('user').username;
-        console.log(likes);
+
         if(likes.filter(e => e.username === name).length > 0) {
             return;
         }
@@ -113,7 +109,7 @@ class Album extends React.Component {
                         album={this.state.album}
                         albumClass='unClickable'
                     />
-                    <Body
+                    { this.props.showBody && <Body
                         weekOf={this.props.album.date}
                         showStars={this.props.showStars}
                         updateStars={this.updateStars}
@@ -123,8 +119,7 @@ class Album extends React.Component {
                         songs={this.state.album.tracks}
                         user={this.state.album.user}
                         date={this.state.album.releaseDate}
-                        showBody={this.props.showBody}
-                    />
+                    />}
                 </Card>
         );
     }

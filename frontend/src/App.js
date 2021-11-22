@@ -13,7 +13,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 class App extends Component {
     componentDidMount() {
-        document.title = 'Album of the Week';
     }
     render() {
         return (
@@ -34,6 +33,6 @@ class App extends Component {
               </div>
         );
     }
-}// the '/' should always be last for the time being
+}
 
 export default App;

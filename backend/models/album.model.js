@@ -27,6 +27,7 @@ const albumSchema = new mongoose.Schema({
     oldPopularity: Number
 }, {toJSON: {virtuals: true},
 toObject: {virtuals:true}});
+
 albumSchema.virtual('artist', {
     ref: 'Artist',
     localField: 'artist_id',
@@ -73,9 +74,8 @@ class Album {
         let album = this.findOne(id);
         return this.populateAlbum(album);
     }
-
-    static getByYear(year) {
-        const stringifiedYear = String(year);
+    static findByYear(year) {
+        const stringifiedYear = JSON.stringify(year);
         let album = this.find({
             releaseDate: { $eq: stringifiedYear}
         });
@@ -87,9 +87,9 @@ class Album {
         album = this.populateAlbum(album);
         return album;
     }
-    
-    getYear() {
-        return `${this.year}`;
+
+    static async getReleaseDates() {
+        return await this.distinct('releaseDate');
     }
 }
 

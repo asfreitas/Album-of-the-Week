@@ -19,18 +19,24 @@ artistSchema.virtual('album_ids', {
 });
 
 class Artist {
-    static addArtist() {
-        
+    static async addArtist(artist, album_id) {
+        const data = {
+            genres: artist.genres,
+            artist_id: artist.id,
+            name: artist.name,
+            albums: album_id
+    
+        }
+        const newArtist = await this.findOneAndUpdate(artist_id, data, {
+            new: true,
+            upsert: true
+        });
+        newArtist.save();
     }
 }
+/*
 artistSchema.statics.addArtist = async function(artist, album_id) {
-    const data = {
-        genres: artist.genres,
-        artist_id: artist.id,
-        name: artist.name,
-        albums: album_id
 
-    }
     const filter = {artist_id: artist.id};
     const newArtist = await Artist.findOneAndUpdate(filter, data, {
         new: true,
@@ -38,9 +44,9 @@ artistSchema.statics.addArtist = async function(artist, album_id) {
     });
     newArtist.save();
 
-}
+}*/
 
-
+artistSchema.loadClass(Artist);
 const model = mongoose.model('Artist', artistSchema);
 
 module.exports = model;

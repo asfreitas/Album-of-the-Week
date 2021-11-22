@@ -48,7 +48,7 @@ const Navigator = () => {
                     <Nav className="me-auto my-1 my-lg-0">
                         <NavbarBrand href='/albums/weekly'>Album of the Week</NavbarBrand>
                         <Nav.Link href='/'>Albums</Nav.Link>
-                        <Nav.Link href='/year'>Year</Nav.Link>
+                        <Nav.Link href='/year'>Years</Nav.Link>
                         <Nav.Link href='/search'>Add New Album</Nav.Link>
                     </Nav>
                     <Signin/>
